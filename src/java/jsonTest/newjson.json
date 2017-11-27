@@ -1,0 +1,44 @@
+{
+    
+    "url":"http://localhost:8084/WSEEG/terminalproject/electroencephalography/    operacion   ",
+    
+    "operaciones":{
+        "inicio de sesion":                             "/singin/{json}",
+        "registro paciente":                            "/singuppatient/{jsonPatient}",
+        "registro especialista":                        "/singupspetialist/{jsonSpetialist}",
+        "obtener info paciente":                        "/getpatientdata/{idPatient}",
+        "obtener info especialista":                    "/getspetialistdata/{idSpetialist}",
+        "obtener todos los especialistas":              "/getallspetialist",
+        "obtener pacientes por especialista":           "/getpatientsbyspetialist/{idSpetialist}",
+        "obtener cita de paciente":                     "/getpatientschedule/{jsonPatientSchedule}",
+        "obtener las citas del paciente":               "/getpatientschedules/{idPatient}",
+        "obtener estudio de paciente":                  "/getstudybypatient/{idPatient}--------------pendiente msolo obtiene todos los estudios, se requiere obtener el idCita",
+        "obtiene los resultados de un intervalo":       "/getresultsegmentsbyinterval/{jsonResultSegmentsByInterval}",
+        "registrar o relizar una cita":                 "/scheduleappointment/{jsonSchedule}",
+        "registrar resultados generales":               "/storegeneralresults/{jsonGeneralResults}",
+        "registrar resultados por segmento de 1seg":    "/storeresultsbysegment/{jsonResultsBySegment}",
+        "registrar resultados por canal":               "/storeresultsbychanel/{jsonResultsByChanel}",
+        "registrar dispositivo paciente":               "/storedevicebypatient/{jsonDevice}"
+    },
+    
+    "Json": "Los siguientes son ejemplos de Json",
+    
+    "resgistroEspecialista":{"idUsuario":1,"name":"Jorge","fistLastName":"Zepeda","secondLastName":"Tinoco","email":"jorzet.94@gmail.com","password":"123456","gender":"Masculino","age":22,"profilePhoto":[35,17]},
+    "resgistroPacienteFernando":{"especialista":{"idUsuario":1,"age":0},"idUsuario":0,"name":"Hugo","fistLastName":"Hernandez","secondLastName":"Perez","padecimiento":"epilepsia","email":"hugo.94@gmail.com","password":"12345678","gender":"Masculino","age":22,"profilePhoto":[-86,-69]},
+    "resgistroPacienteEdgar":{"especialista":{"idUsuario":1,"age":0},"idUsuario":2,"name":"Edgar","fistLastName":"Zepeda","secondLastName":"Tinoco","email":"ing_ragde@hotmail.com","password":"2222222","gender":"Masculino","age":35,"profilePhoto":[-86,-69]},
+    "inicioSesionFernando":{"email":"fhmo.94@gmail.com","password":"12345678"},
+    "inicioSecionEdgar":{"email":"ing_ragde@hotmail.com","password":"2222222"},
+    "inicioSesionJorge":{"email":"jorzet.94@gmail.com","password":"123456"},
+    "obtenerCitaPorPaciente":{"folioCita":1,"idPaciente":1},
+    "obtenerEstudioPaciente":{"folioCita":1,"idPaciente":1},
+    "obtenerResultadosIntervalo":{"idPaciente":1,"desdeSegundo":1,"hastaSegundo":4},
+    "registroCita":{"folioCita":0,"paciente":{"idUsuario":2},"fecha":"2017-03-17","hora":"13:00","duracion":"5:00","observaciones":"Hola Fernando recuerda colocar la pasta antes de poner los electrodos"},
+    "registrarResultadosGen":{"idResultadosGenerales":0,"grabacion":{"idGrabacion":1},"cita":{"folioCita":1},"zonaCerebral":"parental","tipoOndaDominante":"Ritmo-alpha","porcentajeTipoOnda":30.5},
+    "registrarResultadosSegm":{"idResultadosSegmento":0,"grabacion":{"idGrabacion":1},"segundo":10,"canal":"F1-T1","frecuenciaDominante":0.00263,"tipoOnda":"Frecuencia-beta","senal":"[23,2,323,4345,546,46,457,68,679,780]"},
+    "registrarResultadosCanal":{"idResultadosCanal":0,"grabacion":{"idGrabacion":1},"canal":"F1-T1","tipoOndaDominanteCanal":"Ritmo-Theta","frecuenciaDominanteCanal":0.00234,"promedioAmplitudesCanal":0.00674,"porcentajeAparicionRitmoAlpha":10,"porcentajeAparicionRitmoBeta":11,"porcentajeAparicionRitmoDelta":12,"porcentajeAparicionRitmoTheta":13,"porcentajeAparicionFrecuenciaAlpha":14,"porcentajeAparicionFrecuenciaBeta":15,"porcentajeAparicionFrecuenciaDelta":16,"porcentajeAparicionFrecuenciaTheta":17,"promedioAmplitudesRitmoAlpha":18,"promedioAmplitudesRitmoBeta":19,"promedioAmplitudesRitmoDelta":20,"promedioAmplitudesRitmoTheta":21,"promedioAmplitudesFrecuenciaAlpha":22,"promedioAmplitudesFrecuenciaBeta":23,"promedioAmplitudesFrecuenciaDelta":24,"promedioAmplitudesFrecuenciaTheta":25},
+    "/storefilerecording/":{"id_user":1,"directory_name":"FernandoHernandezMolina","date_recording":"2-11-17","total_bytes":327,"current_position_file":0,"bytes_file":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]},
+    "storedevicebypatient":{"idPaciente":1,"deviceName":"raspberry","deviceMacAddress":"12:34:45:65:87"},
+    
+    "Ejemplo de url": "http://localhost:8084/WSEEG/terminalproject/electroencephalography/singin/", "A continuacion añadir": {"email":"fhmo.94@gmail.com","password":"12345678"}
+    
+}

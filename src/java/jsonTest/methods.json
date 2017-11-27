@@ -1,0 +1,10 @@
+{
+    "name": "Jorge",
+    "singin":"done",
+    "singuppatient":"pending, add profile photo",
+    "setScheduleAppointment":"json add electrodes array pending",
+    "getpatientschedules":"done",
+    "getstudybypatient":"done",
+    "requestUpdateSchedule":"to do, pending to test with json update schedule"
+    
+}
