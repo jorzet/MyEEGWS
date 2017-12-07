@@ -1,7 +1,7 @@
 package entities;
 
 /**
- * @author Jorge
+ * @author Jorge Zepeda Tinoco
  * @version 1.0
  * @created 02-Jul-2017 1:24:04 PM
  */

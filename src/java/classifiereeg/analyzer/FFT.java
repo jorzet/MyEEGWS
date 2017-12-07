@@ -7,7 +7,7 @@ package classifiereeg.analyzer;
 
 /**
  *
- * @author Jorge
+ * @author Jorge Zepeda Tinoco
  */
 public class FFT {
 

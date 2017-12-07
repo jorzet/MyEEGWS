@@ -6,6 +6,7 @@
 package businessRules;
 
 import Dao.Dao;
+import classifiereeg.clasificadoreeg.ClasificadorEEG;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -36,7 +37,7 @@ import security.AccessToken;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class BusinessRules {
     
@@ -665,7 +666,10 @@ public class BusinessRules {
                 args[0] = pathScheduleId;
                 args[1] = channelList;
                 System.out.println("lista: "+ channelList);
-                classifiereeg.clasificadoreeg.ClasificadorEEG.classifierEEG(args);
+                
+                Runnable processor = new ClasificadorEEG(args);
+                new Thread(processor).start();
+                
                 return Palabras.CODE_SUCESSFULL_TRANSFER_FILES_COMPLETE;
             }
             return Palabras.CODE_SUCESSFULL_STORE_RECORDING;

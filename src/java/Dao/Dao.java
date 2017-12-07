@@ -94,7 +94,7 @@ public class Dao {
                 sp.setBytes(10, paciente.getPrifilePhoto());
                 sp.registerOutParameter(11, java.sql.Types.VARCHAR);
                 sp.execute();
-                resultado = sp.getNString(11);
+                resultado = sp.getString(11);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class Dao {
                 sp.setBytes(7, especialista.getPrifilePhoto());
                 sp.registerOutParameter(8, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(8);
+                resultado = sp.getString(8);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -160,7 +160,7 @@ public class Dao {
                 sp.setString(3, deviceMacAddress);
                 sp.registerOutParameter(4, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(4);
+                resultado = sp.getString(4);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -199,7 +199,7 @@ public class Dao {
                 sp.setString(6, electrodes);
                 sp.registerOutParameter(7, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(7);
+                resultado = sp.getString(7);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -237,7 +237,7 @@ public class Dao {
                 sp.setString(2, grabacion.getNombreArchivo());
                 sp.registerOutParameter(3, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(3);
+                resultado = sp.getString(3);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -264,14 +264,13 @@ public class Dao {
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
-                sp.setInt(1, resultadosGenerales.getGrabacion().getIdGrabacion());
-                sp.setInt(2, resultadosGenerales.getCita().getFolioCita());
-                sp.setString(3, resultadosGenerales.getZonaCerebral());
-                sp.setString(4, resultadosGenerales.getTipoOndaDominante());
-                sp.setFloat(5, resultadosGenerales.getPorcentajeTipoOnda());
-                sp.registerOutParameter(6, java.sql.Types.NVARCHAR);
+                sp.setInt(1, resultadosGenerales.getCita().getFolioCita());
+                sp.setString(2, resultadosGenerales.getZonaCerebral());
+                sp.setString(3, resultadosGenerales.getTipoOndaDominante());
+                sp.setFloat(4, resultadosGenerales.getPorcentajeTipoOnda());
+                sp.registerOutParameter(5, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(6);
+                resultado = sp.getString(5);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -301,12 +300,12 @@ public class Dao {
                 sp.setInt(1, resultadosSegmento.getGrabacion().getIdGrabacion());
                 sp.setInt(2, resultadosSegmento.getSegundo());
                 sp.setString(3, resultadosSegmento.getCanal());
-                sp.setFloat(4, resultadosSegmento.getFrecuenciaDominante());
+                sp.setDouble(4, resultadosSegmento.getFrecuenciaDominante());
                 sp.setString(5, resultadosSegmento.getTipoOnda());
                 sp.setString(6, resultadosSegmento.getSenal());
                 sp.registerOutParameter(7, java.sql.Types.NVARCHAR);
                 sp.execute();
-                resultado = sp.getNString(7);
+                resultado = sp.getString(7);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -328,35 +327,46 @@ public class Dao {
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
-                SQL = "{call insertarResultadosCanal (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                SQL = "{call insertarResultadosCanal (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
                 sp.setInt(1, resultadosCanal.getGrabacion().getIdGrabacion());
                 sp.setString(2, resultadosCanal.getCanal());
                 sp.setString(3, resultadosCanal.getTipoOndaDominanteCanal());
-                sp.setFloat(4, resultadosCanal.getFrecuenciaDominanteCanal());
-                sp.setFloat(5, resultadosCanal.getPromedioAmplitudesCanal());
-                sp.setFloat(6, resultadosCanal.getPorcentajeAparicionRitmoAlpha());
-                sp.setFloat(7, resultadosCanal.getPorcentajeAparicionRitmoBeta());
-                sp.setFloat(8, resultadosCanal.getPorcentajeAparicionRitmoDelta());
-                sp.setFloat(9, resultadosCanal.getPorcentajeAparicionRitmoTheta());
-                sp.setFloat(10, resultadosCanal.getPorcentajeAparicionFrecuenciaAlpha());
-                sp.setFloat(11, resultadosCanal.getPorcentajeAparicionFrecuenciaBeta());
-                sp.setFloat(12, resultadosCanal.getPorcentajeAparicionFrecuenciaDelta());
-                sp.setFloat(13, resultadosCanal.getPorcentajeAparicionFrecuenciaTheta());
-                sp.setFloat(14, resultadosCanal.getPromedioAmplitudesRitmoAlpha());
-                sp.setFloat(15, resultadosCanal.getPromedioAmplitudesRitmoBeta());
-                sp.setFloat(16, resultadosCanal.getPromedioAmplitudesRitmoDelta());
-                sp.setFloat(17, resultadosCanal.getPromedioAmplitudesRitmoTheta());
-                sp.setFloat(18, resultadosCanal.getPromedioAmplitudesFrecuenciaAlpha());
-                sp.setFloat(19, resultadosCanal.getPromedioAmplitudesFrecuenciaBeta());
-                sp.setFloat(20, resultadosCanal.getPromedioAmplitudesFrecuenciaDelta());
-                sp.setFloat(21, resultadosCanal.getPromedioAmplitudesFrecuenciaTheta());
+                sp.setDouble(4, resultadosCanal.getFrecuenciaDominanteCanal());
+                sp.setDouble(5, resultadosCanal.getPromedioAmplitudesCanal());
                 
-                sp.registerOutParameter(22, java.sql.Types.NVARCHAR);
+                sp.setDouble(6, resultadosCanal.getPorcentajeAparicionRitmoAlpha());
+                sp.setDouble(7, resultadosCanal.getPorcentajeAparicionRitmoBeta());
+                sp.setDouble(8, resultadosCanal.getPorcentajeAparicionRitmoDelta());
+                sp.setDouble(9, resultadosCanal.getPorcentajeAparicionRitmoTheta());
+                sp.setDouble(10, resultadosCanal.getPorcentajeAparicionFrecuenciaAlpha());
+                sp.setDouble(11, resultadosCanal.getPorcentajeAparicionFrecuenciaBeta());
+                sp.setDouble(12, resultadosCanal.getPorcentajeAparicionFrecuenciaDelta());
+                sp.setDouble(13, resultadosCanal.getPorcentajeAparicionFrecuenciaTheta());
+                
+                sp.setDouble(14, resultadosCanal.getPromedioAmplitudesRitmoAlpha());
+                sp.setDouble(15, resultadosCanal.getPromedioAmplitudesRitmoBeta());
+                sp.setDouble(16, resultadosCanal.getPromedioAmplitudesRitmoDelta());
+                sp.setDouble(17, resultadosCanal.getPromedioAmplitudesRitmoTheta());
+                sp.setDouble(18, resultadosCanal.getPromedioAmplitudesFrecuenciaAlpha());
+                sp.setDouble(19, resultadosCanal.getPromedioAmplitudesFrecuenciaBeta());
+                sp.setDouble(20, resultadosCanal.getPromedioAmplitudesFrecuenciaDelta());
+                sp.setDouble(21, resultadosCanal.getPromedioAmplitudesFrecuenciaTheta());
+                
+                sp.setDouble(22, resultadosCanal.getPromedioFrecuenciasRitmoAlpha());
+                sp.setDouble(23, resultadosCanal.getPromedioFrecuenciasRitmoBeta());
+                sp.setDouble(24, resultadosCanal.getPromedioFrecuenciasRitmoDelta());
+                sp.setDouble(25, resultadosCanal.getPromedioFrecuenciasRitmoTheta());
+                sp.setDouble(26, resultadosCanal.getPromedioFrecuenciasFrecuenciaAlpha());
+                sp.setDouble(27, resultadosCanal.getPromedioFrecuenciasFrecuenciaBeta());
+                sp.setDouble(28, resultadosCanal.getPromedioFrecuenciasFrecuenciaDelta());
+                sp.setDouble(29, resultadosCanal.getPromedioFrecuenciasFrecuenciaTheta());
+                
+                sp.registerOutParameter(30, java.sql.Types.VARCHAR);
                 sp.execute();
-                resultado = sp.getNString(22);
+                resultado = sp.getString(30);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -493,7 +503,7 @@ public class Dao {
                 sp.setInt(1, idPaciente);
                 sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(2);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -606,7 +616,7 @@ public class Dao {
                 sp.setQueryTimeout(20);
                 sp.registerOutParameter(1, java.sql.Types.BOOLEAN);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(1);
+                resultado = sp.getString(1);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -665,7 +675,7 @@ public class Dao {
                 sp.setInt(1, idEspecialista);
                 sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(2);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -734,7 +744,7 @@ public class Dao {
                 sp.setInt(2, idPaciente);
                 sp.registerOutParameter(3, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(3);
+                resultado = sp.getString(3);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -797,7 +807,7 @@ public class Dao {
                 sp.setInt(1, idPaciente);
                 sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(2);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -858,7 +868,7 @@ public class Dao {
                 sp.setInt(1, idEspecialista);
                 sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(2);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -934,7 +944,7 @@ public class Dao {
                 sp.setInt(2, idPaciente);
                 sp.registerOutParameter(3, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(3);
+                resultado = sp.getString(3);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -949,18 +959,17 @@ public class Dao {
                         grabacion = new Grabacion();
                         cita = new Cita();
                         
-                        grabacion.setIdGrabacion(rs.getInt(1));
-                        resultadoGeneral.setGrabacion(grabacion);
-                        cita.setFolioCita(rs.getInt(2));
+                        
+                        cita.setFolioCita(rs.getInt(1));
                         resultadoGeneral.setCita(cita);
-                        resultadoGeneral.setIdResultadosGenerales(rs.getInt(3));
-                        Date date = rs.getDate(4);
+                        resultadoGeneral.setIdResultadosGenerales(rs.getInt(2));
+                        Date date = rs.getDate(3);
                         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         String fecha = df.format(date);
                         cita.setFecha(fecha);
-                        cita.setHora(rs.getTime(5).toString());
-                        cita.setDuracion(rs.getTime(6).toString());
-                        String[] electrodes = rs.getString(7).split(",");
+                        cita.setHora(rs.getTime(4).toString());
+                        cita.setDuracion(rs.getTime(5).toString());
+                        String[] electrodes = rs.getString(6).split(",");
                         cita.setElectrodos(electrodes);
                         resultadoGeneral.setZonaCerebral(rs.getString(7));
                         resultadoGeneral.setTipoOndaDominate(rs.getString(8));
@@ -1000,7 +1009,7 @@ public class Dao {
                 sp.setInt(3, hastaSegundo);
                 sp.registerOutParameter(4, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(4);
+                resultado = sp.getString(4);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -1057,7 +1066,7 @@ public class Dao {
                 sp.setInt(1, idPaciente);
                 sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getNString(2);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -1180,7 +1189,7 @@ public class Dao {
         }
         return jsonQuery;
     }
-    
+   
 }
 
 

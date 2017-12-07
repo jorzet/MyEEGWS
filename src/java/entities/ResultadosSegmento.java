@@ -7,14 +7,14 @@ package entities;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class ResultadosSegmento {
     private int idResultadosSegmento;
     private Grabacion grabacion;
     private int segundo;
     private String canal;
-    private float frecuenciaDominante;
+    private double frecuenciaDominante;
     private String tipoOnda;
     private String senal;
     
@@ -36,7 +36,7 @@ public class ResultadosSegmento {
         return this.canal;
     }
     
-    public float getFrecuenciaDominante(){
+    public double getFrecuenciaDominante(){
         return this.frecuenciaDominante;
     }
     
@@ -84,7 +84,7 @@ public class ResultadosSegmento {
      *
      * @param frecuenciaDominante
      */
-    public void setFrecuenciaDominante(float frecuenciaDominante){
+    public void setFrecuenciaDominante(double frecuenciaDominante){
         this.frecuenciaDominante = frecuenciaDominante;
     }
     

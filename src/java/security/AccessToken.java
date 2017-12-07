@@ -7,7 +7,7 @@ package security;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class AccessToken {
 

@@ -7,7 +7,7 @@ package businessRules;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class Palabras {
     

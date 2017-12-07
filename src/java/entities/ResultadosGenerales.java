@@ -7,11 +7,10 @@ package entities;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class ResultadosGenerales {
     private int idResultadosGenerales;
-    private Grabacion grabacion;
     private Cita cita;
     private String zonaCerebral;
     private String tipoOndaDominante;
@@ -21,10 +20,6 @@ public class ResultadosGenerales {
     
     public int getIdResultadosGenerales(){
         return this.idResultadosGenerales;
-    }
-    
-    public Grabacion getGrabacion(){
-        return this.grabacion;
     }
     
     public Cita getCita(){
@@ -49,14 +44,6 @@ public class ResultadosGenerales {
      */
     public void setIdResultadosGenerales(int idResultadosGenerales){
         this.idResultadosGenerales = idResultadosGenerales;
-    }
-
-    /**
-     *
-     * @param grabacion
-     */
-    public void setGrabacion(Grabacion grabacion){
-        this.grabacion = grabacion;
     }
     
     /**

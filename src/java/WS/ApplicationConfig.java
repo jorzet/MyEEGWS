@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 @javax.ws.rs.ApplicationPath("terminalproject")
 public class ApplicationConfig extends Application {

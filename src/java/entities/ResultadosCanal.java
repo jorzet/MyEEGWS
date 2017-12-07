@@ -7,31 +7,40 @@ package entities;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class ResultadosCanal {
     private int idResultadosCanal;
     private Grabacion grabacion;
     private String canal;
     private String tipoOndaDominanteCanal;
-    private float frecuenciaDominanteCanal;
-    private float promedioAmplitudesCanal;
-    private float porcentajeAparicionRitmoAlpha;
-    private float porcentajeAparicionRitmoBeta;
-    private float porcentajeAparicionRitmoDelta;
-    private float porcentajeAparicionRitmoTheta;
-    private float porcentajeAparicionFrecuenciaAlpha;
-    private float porcentajeAparicionFrecuenciaBeta;
-    private float porcentajeAparicionFrecuenciaDelta;
-    private float porcentajeAparicionFrecuenciaTheta;
-    private float promedioAmplitudesRitmoAlpha;
-    private float promedioAmplitudesRitmoBeta;
-    private float promedioAmplitudesRitmoDelta;
-    private float promedioAmplitudesRitmoTheta;
-    private float promedioAmplitudesFrecuenciaAlpha;
-    private float promedioAmplitudesFrecuenciaBeta;
-    private float promedioAmplitudesFrecuenciaDelta;
-    private float promedioAmplitudesFrecuenciaTheta;
+    private double frecuenciaDominanteCanal;
+    private double promedioAmplitudesCanal;
+    
+    private double porcentajeAparicionRitmoAlpha;
+    private double porcentajeAparicionRitmoBeta;
+    private double porcentajeAparicionRitmoDelta;
+    private double porcentajeAparicionRitmoTheta;
+    private double porcentajeAparicionFrecuenciaAlpha;
+    private double porcentajeAparicionFrecuenciaBeta;
+    private double porcentajeAparicionFrecuenciaDelta;
+    private double porcentajeAparicionFrecuenciaTheta;
+    private double promedioAmplitudesRitmoAlpha;
+    private double promedioAmplitudesRitmoBeta;
+    private double promedioAmplitudesRitmoDelta;
+    private double promedioAmplitudesRitmoTheta;
+    private double promedioAmplitudesFrecuenciaAlpha;
+    private double promedioAmplitudesFrecuenciaBeta;
+    private double promedioAmplitudesFrecuenciaDelta;
+    private double promedioAmplitudesFrecuenciaTheta;
+    private double promedioFrecuenciasRitmoAlpha;
+    private double promedioFrecuenciasRitmoBeta;
+    private double promedioFrecuenciasRitmoDelta;
+    private double promedioFrecuenciasRitmoTheta;
+    private double promedioFrecuenciasFrecuenciaAlpha;
+    private double promedioFrecuenciasFrecuenciaBeta;
+    private double promedioFrecuenciasFrecuenciaDelta;
+    private double promedioFrecuenciasFrecuenciaTheta;
     
     public ResultadosCanal(){}
     
@@ -51,76 +60,108 @@ public class ResultadosCanal {
         return this.tipoOndaDominanteCanal;
     }
     
-    public float getFrecuenciaDominanteCanal(){
+    public double getFrecuenciaDominanteCanal(){
         return this.frecuenciaDominanteCanal;
     }
     
-    public float getPromedioAmplitudesCanal(){
+    public double getPromedioAmplitudesCanal(){
         return this.promedioAmplitudesCanal;
     }
     
-    public float getPorcentajeAparicionRitmoAlpha(){
+    public double getPorcentajeAparicionRitmoAlpha(){
         return this.porcentajeAparicionRitmoAlpha;
     }
     
-    public float getPorcentajeAparicionRitmoBeta(){
+    public double getPorcentajeAparicionRitmoBeta(){
         return this.porcentajeAparicionRitmoBeta;
     }
     
-    public float getPorcentajeAparicionRitmoDelta(){
+    public double getPorcentajeAparicionRitmoDelta(){
         return this.porcentajeAparicionRitmoDelta;
     }
     
-    public float getPorcentajeAparicionRitmoTheta(){
+    public double getPorcentajeAparicionRitmoTheta(){
         return this.porcentajeAparicionRitmoTheta;
     }
     
-    public float getPorcentajeAparicionFrecuenciaAlpha(){
+    public double getPorcentajeAparicionFrecuenciaAlpha(){
         return this.porcentajeAparicionFrecuenciaAlpha;
     }
     
-    public float getPorcentajeAparicionFrecuenciaBeta(){
+    public double getPorcentajeAparicionFrecuenciaBeta(){
         return this.porcentajeAparicionFrecuenciaBeta;
     }
     
-    public float getPorcentajeAparicionFrecuenciaDelta(){
+    public double getPorcentajeAparicionFrecuenciaDelta(){
         return this.porcentajeAparicionFrecuenciaDelta;
     }
     
-    public float getPorcentajeAparicionFrecuenciaTheta(){
+    public double getPorcentajeAparicionFrecuenciaTheta(){
         return this.porcentajeAparicionFrecuenciaTheta;
     }
     
-    public float getPromedioAmplitudesRitmoAlpha(){
+    public double getPromedioAmplitudesRitmoAlpha(){
         return this.promedioAmplitudesRitmoAlpha;
     }
     
-    public float getPromedioAmplitudesRitmoBeta(){
+    public double getPromedioAmplitudesRitmoBeta(){
         return this.promedioAmplitudesRitmoBeta;
     }
     
-    public float getPromedioAmplitudesRitmoDelta(){
+    public double getPromedioAmplitudesRitmoDelta(){
         return this.promedioAmplitudesRitmoDelta;
     }
     
-    public float getPromedioAmplitudesRitmoTheta(){
+    public double getPromedioAmplitudesRitmoTheta(){
         return this.promedioAmplitudesRitmoTheta;
     }
     
-    public float getPromedioAmplitudesFrecuenciaAlpha(){
+    public double getPromedioAmplitudesFrecuenciaAlpha(){
         return this.promedioAmplitudesFrecuenciaAlpha;
     }
     
-    public float getPromedioAmplitudesFrecuenciaBeta(){
+    public double getPromedioAmplitudesFrecuenciaBeta(){
         return this.promedioAmplitudesFrecuenciaBeta;
     }
     
-    public float getPromedioAmplitudesFrecuenciaDelta(){
+    public double getPromedioAmplitudesFrecuenciaDelta(){
         return this.promedioAmplitudesFrecuenciaDelta;
     }
     
-    public float getPromedioAmplitudesFrecuenciaTheta(){
+    public double getPromedioAmplitudesFrecuenciaTheta(){
         return this.promedioAmplitudesFrecuenciaTheta;
+    }
+    
+    public double getPromedioFrecuenciasRitmoAlpha(){
+        return this.promedioFrecuenciasRitmoAlpha;
+    }
+    
+    public double getPromedioFrecuenciasRitmoBeta(){
+        return this.promedioFrecuenciasRitmoBeta;
+    }
+    
+    public double getPromedioFrecuenciasRitmoDelta(){
+        return this.promedioFrecuenciasRitmoDelta;
+    }
+    
+    public double getPromedioFrecuenciasRitmoTheta(){
+        return this.promedioFrecuenciasRitmoTheta;
+    }
+    
+    public double getPromedioFrecuenciasFrecuenciaAlpha(){
+        return this.promedioFrecuenciasFrecuenciaAlpha;
+    }
+    
+    public double getPromedioFrecuenciasFrecuenciaBeta(){
+        return this.promedioFrecuenciasFrecuenciaBeta;
+    }
+    
+    public double getPromedioFrecuenciasFrecuenciaDelta(){
+        return this.promedioFrecuenciasFrecuenciaDelta;
+    }
+    
+    public double getPromedioFrecuenciasFrecuenciaTheta(){
+        return this.promedioFrecuenciasFrecuenciaTheta;
     }
     
     /**
@@ -159,7 +200,7 @@ public class ResultadosCanal {
      *
      * @param frecuenciaDominanteCanal
      */
-    public void setFrecuenciaDominanteCanal(float frecuenciaDominanteCanal){
+    public void setFrecuenciaDominanteCanal(double frecuenciaDominanteCanal){
         this.frecuenciaDominanteCanal = frecuenciaDominanteCanal;
     }
     
@@ -167,7 +208,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesCanal
      */
-    public void setPromedioAmplitudesCanal(float promedioAmplitudesCanal){
+    public void setPromedioAmplitudesCanal(double promedioAmplitudesCanal){
         this.promedioAmplitudesCanal = promedioAmplitudesCanal;
     }
     
@@ -175,7 +216,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionRitmoAlpha
      */
-    public void setPorcentajeAparicionRitmoAlpha(float porcentajeAparicionRitmoAlpha){
+    public void setPorcentajeAparicionRitmoAlpha(double porcentajeAparicionRitmoAlpha){
         this.porcentajeAparicionRitmoAlpha = porcentajeAparicionRitmoAlpha;
     }
     
@@ -183,7 +224,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionRitmoBeta
      */
-    public void setPorcentajeAparicionRitmoBeta(float porcentajeAparicionRitmoBeta){
+    public void setPorcentajeAparicionRitmoBeta(double porcentajeAparicionRitmoBeta){
         this.porcentajeAparicionRitmoBeta = porcentajeAparicionRitmoBeta;
     }
     
@@ -191,7 +232,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionRitmoDelta
      */
-    public void setPorcentajeAparicionRitmoDelta(float porcentajeAparicionRitmoDelta){
+    public void setPorcentajeAparicionRitmoDelta(double porcentajeAparicionRitmoDelta){
         this.porcentajeAparicionRitmoDelta = porcentajeAparicionRitmoDelta;
     }
 
@@ -199,7 +240,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionRitmoTheta
      */
-    public void setPorcentajeAparicionRitmoTheta(float porcentajeAparicionRitmoTheta){
+    public void setPorcentajeAparicionRitmoTheta(double porcentajeAparicionRitmoTheta){
         this.porcentajeAparicionRitmoTheta = porcentajeAparicionRitmoTheta;
     }
     
@@ -207,7 +248,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionFrecuenciaAlpha
      */
-    public void setPorcentajeAparicionFrecuenciaAlpha(float porcentajeAparicionFrecuenciaAlpha){
+    public void setPorcentajeAparicionFrecuenciaAlpha(double porcentajeAparicionFrecuenciaAlpha){
         this.porcentajeAparicionFrecuenciaAlpha = porcentajeAparicionFrecuenciaAlpha;
     }
     
@@ -215,7 +256,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionFrecuenciaBeta
      */
-    public void setPorcentajeAparicionFrecuenciaBeta(float porcentajeAparicionFrecuenciaBeta){
+    public void setPorcentajeAparicionFrecuenciaBeta(double porcentajeAparicionFrecuenciaBeta){
         this.porcentajeAparicionFrecuenciaBeta = porcentajeAparicionFrecuenciaBeta;
     }
     
@@ -223,7 +264,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionFrecuenciaDelta
      */
-    public void setPorcentajeAparicionFrecuenciaDelta(float porcentajeAparicionFrecuenciaDelta){
+    public void setPorcentajeAparicionFrecuenciaDelta(double porcentajeAparicionFrecuenciaDelta){
         this.porcentajeAparicionFrecuenciaDelta = porcentajeAparicionFrecuenciaDelta;
     }
     
@@ -231,7 +272,7 @@ public class ResultadosCanal {
      *
      * @param porcentajeAparicionFrecuenciaTheta
      */
-    public void setPorcentajeAparicionFrecuenciaTheta(float porcentajeAparicionFrecuenciaTheta){
+    public void setPorcentajeAparicionFrecuenciaTheta(double porcentajeAparicionFrecuenciaTheta){
         this.porcentajeAparicionFrecuenciaTheta = porcentajeAparicionFrecuenciaTheta;
     }
     
@@ -239,7 +280,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesRitmoAlpha
      */
-    public void setPromedioAmplitudesRitmoAlpha(float promedioAmplitudesRitmoAlpha){
+    public void setPromedioAmplitudesRitmoAlpha(double promedioAmplitudesRitmoAlpha){
         this.promedioAmplitudesRitmoAlpha = promedioAmplitudesRitmoAlpha;
     }
             
@@ -247,7 +288,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesRitmoBeta
      */
-    public void setPromedioAmplitudesRitmoBate(float promedioAmplitudesRitmoBeta){
+    public void setPromedioAmplitudesRitmoBeta(double promedioAmplitudesRitmoBeta){
         this.promedioAmplitudesRitmoBeta = promedioAmplitudesRitmoBeta;
     }
     
@@ -255,7 +296,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesRitmoDelta
      */
-    public void setPromedioAmplitudesRitmoDelta(float promedioAmplitudesRitmoDelta){
+    public void setPromedioAmplitudesRitmoDelta(double promedioAmplitudesRitmoDelta){
         this.promedioAmplitudesRitmoDelta = promedioAmplitudesRitmoDelta;
     }
     
@@ -263,7 +304,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesRitmoTheta
      */
-    public void setPromedioAmplitudesRitmoTheta(float promedioAmplitudesRitmoTheta){
+    public void setPromedioAmplitudesRitmoTheta(double promedioAmplitudesRitmoTheta){
         this.promedioAmplitudesRitmoTheta = promedioAmplitudesRitmoTheta;
     }
     
@@ -271,7 +312,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesFrecuenciaAlpha
      */
-    public void setPromedioAmplitudesFrecuenciaAlpha(float promedioAmplitudesFrecuenciaAlpha){
+    public void setPromedioAmplitudesFrecuenciaAlpha(double promedioAmplitudesFrecuenciaAlpha){
         this.promedioAmplitudesFrecuenciaAlpha = promedioAmplitudesFrecuenciaAlpha;
     }
     
@@ -279,7 +320,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesFrecuenciaBeta
      */
-    public void setPromedioAmplitudesFrecuenciaBeta(float promedioAmplitudesFrecuenciaBeta){
+    public void setPromedioAmplitudesFrecuenciaBeta(double promedioAmplitudesFrecuenciaBeta){
         this.promedioAmplitudesFrecuenciaBeta = promedioAmplitudesFrecuenciaBeta;
     }
     
@@ -287,7 +328,7 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesFrecuenciaDelta
      */
-    public void setPromedioAmplitudesFrecuenciaDelta(float promedioAmplitudesFrecuenciaDelta){
+    public void setPromedioAmplitudesFrecuenciaDelta(double promedioAmplitudesFrecuenciaDelta){
         this.promedioAmplitudesFrecuenciaDelta = promedioAmplitudesFrecuenciaDelta;
     }
     
@@ -295,7 +336,69 @@ public class ResultadosCanal {
      *
      * @param promedioAmplitudesFrecuenciaTheta
      */
-    public void setPromedioAmplitudesFrecuenciaTheta(float promedioAmplitudesFrecuenciaTheta){
+    public void setPromedioAmplitudesFrecuenciaTheta(double promedioAmplitudesFrecuenciaTheta){
         this.promedioAmplitudesFrecuenciaTheta = promedioAmplitudesFrecuenciaTheta;
     }
+    
+    /**
+     *
+     * @param promedioFrecuenciasRitmoAlpha
+     */
+    public void setPromedioFrecuenciasRitmoAlpha(double promedioFrecuenciasRitmoAlpha){
+        this.promedioFrecuenciasRitmoAlpha = promedioFrecuenciasRitmoAlpha;
+    }
+            
+    /**
+     *
+     * @param promedioFrecuenciasRitmoBeta
+     */
+    public void setPromedioFrecuenciasRitmoBeta(double promedioFrecuenciasRitmoBeta){
+        this.promedioFrecuenciasRitmoBeta = promedioFrecuenciasRitmoBeta;
+    }
+    
+    /**
+     *
+     * @param promedioFrecuenciasRitmoDelta
+     */
+    public void setPromedioFrecuenciasRitmoDelta(double promedioFrecuenciasRitmoDelta){
+        this.promedioFrecuenciasRitmoDelta = promedioFrecuenciasRitmoDelta;
+    }
+    
+    /**
+     *
+     * @param promedioFrecuenciasRitmoTheta
+     */
+    public void setPromedioFrecuenciasRitmoTheta(double promedioFrecuenciasRitmoTheta){
+        this.promedioFrecuenciasRitmoTheta = promedioFrecuenciasRitmoTheta;
+    }
+   
+    /**
+     *
+     * @param promedioFrecuenciasFrecuenciaAlpha
+     */
+    public void setPromedioFrecuenciasFrecuenciaAlpha(double promedioFrecuenciasFrecuenciaAlpha){
+        this.promedioFrecuenciasFrecuenciaAlpha = promedioFrecuenciasFrecuenciaAlpha;
+    }
+    /**
+     *
+     * @param promedioFrecuenciasFrecuenciaBeta
+     */
+    public void setPromedioFrecuenciasFrecuenciaBeta(double promedioFrecuenciasFrecuenciaBeta){
+        this.promedioFrecuenciasFrecuenciaBeta = promedioFrecuenciasFrecuenciaBeta;
+    }
+    /**
+     *
+     * @param promedioFrecuenciasFrecuenciaDelta
+     */
+    public void setPromedioFrecuenciasFrecuenciaDelta(double promedioFrecuenciasFrecuenciaDelta){
+        this.promedioFrecuenciasFrecuenciaDelta = promedioFrecuenciasFrecuenciaDelta;
+    }
+    /**
+     *
+     * @param promedioFrecuenciasFrecuenciaTheta
+     */
+    public void setPromedioFrecuenciasFrecuenciaTheta(double promedioFrecuenciasFrecuenciaTheta){
+        this.promedioFrecuenciasFrecuenciaTheta = promedioFrecuenciasFrecuenciaTheta;
+    }
+    
 }

@@ -7,7 +7,7 @@ package entities;
 
 /**
  *
- * @author fhmma
+ * @author Fernando Hernandez Molina
  */
 public class Dispositivo {
     int deviceId;

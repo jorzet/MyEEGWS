@@ -6,6 +6,7 @@
 package classifiereeg.analyzer;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -26,17 +27,17 @@ public class Detector {
     private static final String GAMMA_FREQUENCY_STR = "GAMMA FREQUENCY";
     private static final String NOT_ANALYZED_STR = "NOT ANALYZED";
     
-    private static final int DELTA_RHYTHM = 0;
-    private static final int DELTA_FREQUENCY = 1;
-    private static final int THETA_RHYTHM = 2;
-    private static final int THETA_FREQUENCY = 3;
-    private static final int ALPHA_RHYTHM = 4;
-    private static final int ALPHA_FREQUENCY = 5;
-    private static final int BETA_RHYTHM = 6;
-    private static final int BETA_FREQUENCY = 7;
-    private static final int GAMMA_RHYTHM = 9;
-    private static final int GAMMA_FREQUENCY = 10;
-    private static final int NOT_ANALYZED = 8;
+    public static final int DELTA_RHYTHM = 0;
+    public static final int DELTA_FREQUENCY = 1;
+    public static final int THETA_RHYTHM = 2;
+    public static final int THETA_FREQUENCY = 3;
+    public static final int ALPHA_RHYTHM = 4;
+    public static final int ALPHA_FREQUENCY = 5;
+    public static final int BETA_RHYTHM = 6;
+    public static final int BETA_FREQUENCY = 7;
+    public static final int GAMMA_RHYTHM = 9;
+    public static final int GAMMA_FREQUENCY = 10;
+    public static final int NOT_ANALYZED = 8;
     
     public static double getAmplitude(double[] data){
         //System.out.println("abs:");
@@ -165,15 +166,12 @@ public class Detector {
         return index; 
     }
     
-    public static Map<Integer, Integer> getWaveTypePercentage(int[] data){
-        Map<Integer, Integer> counter = new TreeMap<Integer, Integer>();
-        for(int i=0;i<data.length;i++){
-            counter.put(data[i],counter.get(data[i]) == null ? 1 : counter.get(data[i]) + 1);
-        }
+    public static Map<Integer, Integer> getWaveTypePercentage(List<Integer> data){
+        Map<Integer, Integer> counter = new TreeMap<>();
         
-        //for(int i=0;i<9;i++)
-        //    counter.put(i,counter.get(i)/data.length);
-        
+        for(int i=0;i<data.size();i++)
+                counter.put(data.get(i),counter.get(data.get(i)) == null? 1 : counter.get(data.get(i)) + 1);
+
         return counter;
     }
 }

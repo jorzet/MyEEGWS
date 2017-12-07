@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class JSONErrorBuilder {
     public static String buildJson(int Error, String Message){

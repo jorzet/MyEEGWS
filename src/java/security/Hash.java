@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  *
- * @author ing_ragde
+ * @author Jorge Zepeda Tinoco
  */
 public class Hash {
     private byte[] digest = null;

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Jorge
+ * @author Jorge Zepeda Tinoco
  */
 public class RecordingData implements Serializable {
     

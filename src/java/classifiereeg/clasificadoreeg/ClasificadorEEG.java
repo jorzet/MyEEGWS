@@ -21,16 +21,20 @@ import java.util.logging.Logger;
  *
  * @author Jorge Zepeda Tinoco
  */
-public class ClasificadorEEG {
-
+public class ClasificadorEEG implements Runnable{
+    private String path;
+    private String[] listFiles;
     /**
      * @param args the command line arguments
      */
-    public static void classifierEEG(String[] args) {
-        // TODO code application logic here
-        String path = args[0];
+    public ClasificadorEEG(String[] args) {
+        path = args[0];
         System.out.println("lista canales: "+ args[1]);
-        String[] listFiles = args[1].split(",");
+        listFiles = args[1].split(",");
+    }
+
+    @Override
+    public void run() {
         for(int i = 0;i<listFiles.length; i++){
             DataInputStream in = null;
             DataOutputStream out = null;
@@ -39,15 +43,22 @@ public class ClasificadorEEG {
                 File aux = new File(path + File.separator + listFiles[i] + "-double" + ".bin");
                 if(!aux.exists())
                     aux.createNewFile();
-                while (true) {
-                        int val = in.readInt();
-                        double doubleVal = ((val * (1.8/4096))/2000)*1000000;
-                        
-                        
-                        out = new DataOutputStream(new FileOutputStream(path + File.separator + listFiles[i] + "-double" + ".bin"));
-                        out.writeDouble(doubleVal);
-                        
+                
+                out = new DataOutputStream(new FileOutputStream(path + File.separator + listFiles[i] + "-double" + ".bin"));
+                int j = 0;
+                while (in.available()>0) {
+                    double val = in.readByte();
+                    double doubleVal = ((val*120)/255);
+                    out.writeDouble(doubleVal);  
+                    j++;
                 }
+                int index = 0;
+                while (in.available()>0) {
+                    double val = in.readDouble();
+                    index++;
+                }
+                System.out.println("tamañooo: i: "+index+" j: "+j);
+                
                     
             } catch (EOFException | FileNotFoundException ignored) {
                 ignored.printStackTrace();
@@ -65,9 +76,11 @@ public class ClasificadorEEG {
         
         for(int i = 0;i< listFiles.length; i++){
             File recordingfile = new File(path + File.separator + listFiles[i] + "-double" + ".bin");
-            new DetectionAlgorithm(recordingfile).doDetection();
+            // TODO - store phatRecording and return idGrabacion 
+            // TODO - get idGrabacion from Database
+            int idGrabacion = 1;
+            new DetectionAlgorithm(recordingfile, listFiles[i], idGrabacion).doDetection();
         }
-        
     }
     
 }

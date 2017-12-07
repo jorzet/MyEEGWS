@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 /**
  * REST Web Service
  *
- * @author Jorge Zepeda
+ * @author Jorge Zepeda Tinoco
  */
 @Path("electroencephalography")
 public class WSEEG {
