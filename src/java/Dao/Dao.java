@@ -67,6 +67,44 @@ public class Dao {
     ArrayList<ResultadosCanal> resultadosCanales;
     
     public Dao(){}
+    /**
+     *
+     * @param paciente
+     * @return
+     */
+    public String registrarAdministrador(Administrador administrador){
+        String resultado = "";
+        origen = new DataSource();
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call insertarAdmin (?,?,?,?,?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20);
+                sp.setString(1, administrador.getName());
+                sp.setString(2, administrador.getFirstLastName());
+                sp.setString(3, administrador.getSecondLastName());
+                sp.setString(4, administrador.getEmail());
+                sp.setString(5, administrador.getPassword());
+                sp.setString(6, administrador.getGender());
+                sp.registerOutParameter(7, java.sql.Types.VARCHAR);
+                sp.execute();
+                resultado = sp.getString(7);
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = e.getMessage().toString();
+        }finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return resultado;
+    }
     
     /**
      *
@@ -224,8 +262,8 @@ public class Dao {
      * @param grabacion
      * @return
      */
-    public String registrarGrabacion(Grabacion grabacion){
-        String resultado = "";
+    public int registrarGrabacion(Grabacion grabacion){
+        int resultado = -1;
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
@@ -233,15 +271,15 @@ public class Dao {
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
-                sp.setInt(1, grabacion.getPaciente().getId());
+                sp.setInt(1, grabacion.getCita().getFolioCita());
                 sp.setString(2, grabacion.getNombreArchivo());
-                sp.registerOutParameter(3, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(3, java.sql.Types.INTEGER);
                 sp.execute();
-                resultado = sp.getString(3);
+                resultado = sp.getInt(3);
             } 
         }catch(SQLException e){
             e.printStackTrace();
-            resultado = e.getMessage().toString();
+            resultado = -2;
         }finally{
             try{
                 origen.cerrarConexion();
@@ -1189,7 +1227,114 @@ public class Dao {
         }
         return jsonQuery;
     }
-   
+     
+    public String eliminarCita(int idSchedule){
+        String jsonQuery = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call eliminarCita (?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setInt(1, idSchedule);
+                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.execute();
+                jsonQuery = sp.getString(2);
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return jsonQuery;
+    }
+    
+    
+    public String eliminarPaciente(int idPatient){
+        String jsonQuery = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call eliminarPaciente (?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setInt(1, idPatient);
+                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.execute();
+                jsonQuery = sp.getString(2);
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return jsonQuery;
+    }
+    
+    
+    public String eliminarespecialista(int idSpetialist){
+        String jsonQuery = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call eliminarEspecialista (?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setInt(1, idSpetialist);
+                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.execute();
+                jsonQuery = sp.getString(2);
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return jsonQuery;
+    }
+    
 }
 
 

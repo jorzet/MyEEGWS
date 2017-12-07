@@ -88,6 +88,7 @@ public class Palabras {
     
     public static final String OK ="OK";
     public static final String SUCESSFULL_SINGUP = "Usuario registrado correctamente";
+    public static final String SUCESSFULL_SCHEDULE_DROP = "Datos eliminados correctamente";
     
     public static final String PATIENT_TYPE = "Paciente";
     public static final String SPETIALIST_TYPE = "Especialista";

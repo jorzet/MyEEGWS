@@ -8,6 +8,7 @@ package entities;
 public class Grabacion {
 
     private int idGrabacion;
+    private Cita cita;
     private Paciente paciente;
     private String nombreArchivo;
     
@@ -20,6 +21,10 @@ public class Grabacion {
         return this.idGrabacion;
     }
 
+    public Cita getCita(){
+        return this.cita;
+    }
+    
     public Paciente getPaciente(){
         return this.paciente;
     }
@@ -34,6 +39,14 @@ public class Grabacion {
     public void setIdGrabacion(int idGrabacion){
         this.idGrabacion = idGrabacion;
     }
+    /**
+     *
+     * @param cita
+     */
+    public void setCita(Cita cita){
+        this.cita = cita;
+    }
+    
     /**
      *
      * @param paciente

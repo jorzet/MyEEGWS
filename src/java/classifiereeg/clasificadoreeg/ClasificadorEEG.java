@@ -5,7 +5,10 @@
  */
 package classifiereeg.clasificadoreeg;
 
+import Dao.Dao;
 import classifiereeg.classifier.DetectionAlgorithm;
+import entities.Cita;
+import entities.Grabacion;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -24,6 +27,7 @@ import java.util.logging.Logger;
 public class ClasificadorEEG implements Runnable{
     private String path;
     private String[] listFiles;
+    Dao source;
     /**
      * @param args the command line arguments
      */
@@ -31,6 +35,7 @@ public class ClasificadorEEG implements Runnable{
         path = args[0];
         System.out.println("lista canales: "+ args[1]);
         listFiles = args[1].split(",");
+        source = new Dao();
     }
 
     @Override
@@ -76,9 +81,16 @@ public class ClasificadorEEG implements Runnable{
         
         for(int i = 0;i< listFiles.length; i++){
             File recordingfile = new File(path + File.separator + listFiles[i] + "-double" + ".bin");
-            // TODO - store phatRecording and return idGrabacion 
-            // TODO - get idGrabacion from Database
-            int idGrabacion = 1;
+            Grabacion grabacion = new Grabacion();
+            Cita cita = new Cita();
+            System.out.println("folioCita: " + path);
+            cita.setFolioCita(Integer.parseInt(path));
+            grabacion.setCita(cita);
+            grabacion.setNombreArchivo(path + File.separator + listFiles[i] + "-double" + ".bin");
+            
+            // Calls procedure storeRecording and this returns the last inser ID
+            int idGrabacion = source.registrarGrabacion(grabacion);
+            
             new DetectionAlgorithm(recordingfile, listFiles[i], idGrabacion).doDetection();
         }
     }

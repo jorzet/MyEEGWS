@@ -10,6 +10,7 @@ import classifiereeg.clasificadoreeg.ClasificadorEEG;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import entities.Administrador;
 import entities.Cita;
 import entities.Dispositivo;
 import org.json.*;
@@ -47,6 +48,7 @@ public class BusinessRules {
     private final Gson gson;
     
     /* variables for business rules */
+    private Administrador administrator;
     private Paciente patient;
     private Especialista spetialist;
     private Cita schedule;
@@ -100,6 +102,27 @@ public class BusinessRules {
             ex.printStackTrace();
             jsonAnswer = words.SYNTAX_ERROR_FROM_JSON;
         }
+        return jsonAnswer;
+    }
+    
+    /**
+     *
+     * @param jsonRegistroPaciente
+     * @return
+     */
+    public String registrarAdministrador(String jsonRegistroAdmin){
+        String respuesta;
+        String jsonAnswer;
+        administrator = new Administrador();
+        JSONObject json;
+        
+        try {
+            administrator = gson.fromJson(jsonRegistroAdmin, Administrador.class);
+            jsonAnswer = gson.toJson(source.registrarAdministrador(administrator));
+        } catch (JsonSyntaxException ex) {
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
         return jsonAnswer;
     }
     
@@ -681,6 +704,44 @@ public class BusinessRules {
             Logger.getLogger(BusinessRules.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+    
+    
+    public String requestDropSchedule(int idSchedule){
+        String jsonAnswer = "";
+        try {
+            jsonAnswer = source.eliminarCita(idSchedule);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
+    
+    public String requestDropPatient(int idPatient){
+        String jsonAnswer = "";
+        try {
+            jsonAnswer = source.eliminarPaciente(idPatient);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
+    
+    
+    public String requestDropSpetialist(int idSpetialist){
+        String jsonAnswer = "";
+        try {
+            jsonAnswer = source.eliminarPaciente(idSpetialist);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
     }
     
 }

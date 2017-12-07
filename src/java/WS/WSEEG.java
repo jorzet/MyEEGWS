@@ -52,6 +52,24 @@ public class WSEEG {
     
     /**
      * Hecho, Done, terminé
+     * Retorna Palabras.SUCESSFULL_SINGUP en caso de registrar correctamente un administrador
+     * Return Palabras.SUCESSFULL_SINGUP in case of sing-up correctly an administrator
+     * Retourne Palabras.SUCESSFULL_SINGUP dans le cas où un administrateur s'inscrit correctement
+     * 
+     * @param jsonPatient
+     * @return
+     */
+    @GET
+    @Path("/singupadministrator/{jsonAdmin}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String singUpAdministrator(@PathParam("jsonAdmin") String jsonAdmin) {
+        BusinessRules rules = new BusinessRules();
+        return rules.registrarAdministrador(jsonAdmin);
+    }
+    
+    
+    /**
+     * Hecho, Done, terminé
      * Retorna Palabras.SUCESSFULL_SINGUP en caso de registrar correctamente un paciente
      * Return Palabras.SUCESSFULL_SINGUP in case of sing-up correctly a patient
      * Retourne Palabras.SUCESSFULL_SINGUP dans le cas où un patient s'inscrit correctement
@@ -331,4 +349,29 @@ public class WSEEG {
         return rules.requestDeleteDevices(jsonDevice);
     }
     //requestStoreDevice
+    
+    @GET
+    @Path("/deleteschedulebyid/{idSchedule}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String deleteScheduleById(@PathParam("idSchedule") String idSchedule){
+        BusinessRules rules = new BusinessRules();
+        return rules.requestDropSchedule(Integer.parseInt(idSchedule));
+    }
+    
+    
+    @GET
+    @Path("/deletepatientbyid/{idPatient}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String deletePatientById(@PathParam("idPatient") String idPatient){
+        BusinessRules rules = new BusinessRules();
+        return rules.requestDropPatient(Integer.parseInt(idPatient));
+    }
+    
+    @GET
+    @Path("/deletespetialistbyid/{idSpetialist}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String deleteSpetialistById(@PathParam("idSpetialist") String idSpetialist){
+        BusinessRules rules = new BusinessRules();
+        return rules.requestDropSpetialist(Integer.parseInt(idSpetialist));
+    }
 }
