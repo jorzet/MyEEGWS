@@ -1335,6 +1335,61 @@ public class Dao {
         return jsonQuery;
     }
     
+    
+    public String obtenerDatosUsuario(String email){
+        String query = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call getEmailAndPassword (?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setString(1, email);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
+                sp.execute();
+                query = sp.getString(2);
+                
+                rs = sp.executeQuery();
+                resultado = sp.getString(2);
+                if(resultado.equals(words.OK)){
+                    while(rs.next()){
+                        f = f+1;
+                    }
+                    if(f == 0){
+                        System.out.println("Es nulo"+rs);
+                        return null;
+                    }
+                    else{
+                        rs.beforeFirst();
+                        rs.next();
+                       query = rs.getString(1) + "," + rs.getString(2);
+                    }
+                }
+                else
+                    return null;
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return query;
+    }
+    
 }
 
 

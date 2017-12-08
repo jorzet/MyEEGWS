@@ -86,6 +86,14 @@ public class Palabras {
     public static final String ERROR_STUDY_NOT_EXISTS = "Error, no existe el estudio correspondiente al usuario";
     public static final String ERROR_INCORRECT_EMAIL_OR_PASSWORD = "Error, el usuario y/o contraseña son invalidos";
     
+    /* to send email */
+    public static final String EMAIL_SINGUP_SUBJECT = "Registro de usuario";
+    public static final String EMAIL_RESTART_PASSWORD_SUBJECT = "Recuperacion de contraseña";
+    public static final String YOUR_EMAIL_IS = "Tu correo electronico es: ";
+    public static final String YOUR_PASSWORD_IS = "Tu contraseña es: ";
+    public static final String YOUR_CONFIRMATION_DODE_IS = "Tu codigo de confirmacion es: ";
+    public static final String EMAIL_SENDED = "Se envio un email a tu correo electronico";
+    
     public static final String OK ="OK";
     public static final String SUCESSFULL_SINGUP = "Usuario registrado correctamente";
     public static final String SUCESSFULL_SCHEDULE_DROP = "Datos eliminados correctamente";

@@ -129,6 +129,15 @@ public class WSEEG {
      * @return
      */
     @GET
+    @Path("/getrestorepassword/{email}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String getRestorePassword(@PathParam("email") String email){
+        BusinessRules rules = new BusinessRules();
+        return rules.restorePassword(email);
+    }
+    
+    
+    @GET
     @Path("/getspetialistdata/{idSpetialist}")
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public String getSpetialistData(@PathParam("idSpetialist") String idSpetialist){

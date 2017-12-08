@@ -10,6 +10,7 @@ import classifiereeg.clasificadoreeg.ClasificadorEEG;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import email.GoogleMail;
 import entities.Administrador;
 import entities.Cita;
 import entities.Dispositivo;
@@ -742,6 +743,26 @@ public class BusinessRules {
         }
         System.out.println(jsonAnswer);
         return jsonAnswer;
+    }
+    
+    
+    public String restorePassword (String email){
+        String response = "";
+        try {
+            response = source.obtenerDatosUsuario(email);
+            if(response != null){
+                String[] res = response.split(",");
+                GoogleMail.sendEmailAndPassword(res[0], res[1]);
+                response = words.EMAIL_SENDED;
+            } else {
+                response = words.ERROR_USER_NOT_EXISTS;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response = words.ERROR_FROM_JSON;
+        }
+        System.out.println(response);
+        return response;
     }
     
 }
