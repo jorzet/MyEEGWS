@@ -263,10 +263,11 @@ public class Dao {
      * @return
      */
     public int registrarGrabacion(Grabacion grabacion){
-        int resultado = -1;
+        
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
+                System.out.println("nombreArchivo: "+grabacion.getNombreArchivo());
                 SQL = "{call insertarGrabacion (?,?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
@@ -275,11 +276,11 @@ public class Dao {
                 sp.setString(2, grabacion.getNombreArchivo());
                 sp.registerOutParameter(3, java.sql.Types.INTEGER);
                 sp.execute();
-                resultado = sp.getInt(3);
+                return sp.getInt(3);
             } 
         }catch(SQLException e){
             e.printStackTrace();
-            resultado = -2;
+            return -2;
         }finally{
             try{
                 origen.cerrarConexion();
@@ -289,7 +290,7 @@ public class Dao {
                 e.printStackTrace();
             }
         }
-        return resultado;
+        return -1;
     }
     
     
@@ -298,15 +299,15 @@ public class Dao {
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
-                SQL = "{call insertarResultadosGenerales (?,?,?,?,?,?)}";
+                SQL = "{call insertarResultadosGenerales (?,?,?,?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
                 sp.setInt(1, resultadosGenerales.getCita().getFolioCita());
                 sp.setString(2, resultadosGenerales.getZonaCerebral());
                 sp.setString(3, resultadosGenerales.getTipoOndaDominante());
-                sp.setFloat(4, resultadosGenerales.getPorcentajeTipoOnda());
-                sp.registerOutParameter(5, java.sql.Types.NVARCHAR);
+                sp.setDouble(4, resultadosGenerales.getPorcentajeTipoOnda());
+                sp.registerOutParameter(5, java.sql.Types.VARCHAR);
                 sp.execute();
                 resultado = sp.getString(5);
             } 
@@ -335,6 +336,7 @@ public class Dao {
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
+                System.out.println("grabacion-------:   "+resultadosSegmento.getGrabacion().getIdGrabacion());
                 sp.setInt(1, resultadosSegmento.getGrabacion().getIdGrabacion());
                 sp.setInt(2, resultadosSegmento.getSegundo());
                 sp.setString(3, resultadosSegmento.getCanal());
@@ -359,6 +361,7 @@ public class Dao {
         }
         return resultado;
     }
+   
     
     public String registrarResultadosCanal(ResultadosCanal resultadosCanal){
         String resultado = "";

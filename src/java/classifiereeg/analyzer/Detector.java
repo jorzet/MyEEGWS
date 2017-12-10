@@ -15,17 +15,17 @@ import java.util.TreeMap;
  * @author Jorge Zepeda Tinoco
  */
 public class Detector {
-    private static final String DELTA_RHYTHM_STR = "DELTA RHYTHM";
-    private static final String DELTA_FREQUENCY_STR = "DELTA FREQUENCY";
-    private static final String THETA_RHYTHM_STR = "THETA RHYTHM";
-    private static final String THETA_FREQUENCY_STR = "THETA FREQUENCY";
-    private static final String ALPHA_RHYTHM_STR = "ALPHA RHYTHM";
-    private static final String ALPHA_FREQUENCY_STR = "ALPHA FREQUENCY";
-    private static final String BETA_RHYTHM_STR = "BETA RHYTHM";
-    private static final String BETA_FREQUENCY_STR = "BETA FREQUENCY";
-    private static final String GAMMA_RHYTHM_STR = "GAMMA RHYTHM";
-    private static final String GAMMA_FREQUENCY_STR = "GAMMA FREQUENCY";
-    private static final String NOT_ANALYZED_STR = "NOT ANALYZED";
+    private static final String DELTA_RHYTHM_STR = "Ritmo-delta";
+    private static final String DELTA_FREQUENCY_STR = "Frecuencia-delta";
+    private static final String THETA_RHYTHM_STR = "'Ritmo-theta";
+    private static final String THETA_FREQUENCY_STR = "Frecuencia-theta";
+    private static final String ALPHA_RHYTHM_STR = "Ritmo-alpha";
+    private static final String ALPHA_FREQUENCY_STR = "Frecuencia-alpha";
+    private static final String BETA_RHYTHM_STR = "Ritmo-beta";
+    private static final String BETA_FREQUENCY_STR = "Frecuencia-beta";
+    private static final String GAMMA_RHYTHM_STR = "Ritmo-gamma";
+    private static final String GAMMA_FREQUENCY_STR = "Frecuencia-gamma";
+    private static final String NOT_ANALYZED_STR = "No-asignado";
     
     public static final int DELTA_RHYTHM = 0;
     public static final int DELTA_FREQUENCY = 1;

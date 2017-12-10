@@ -663,6 +663,7 @@ public class BusinessRules {
     
     private int checkTransferStatusFromJson(File file, String[] channels, String pathScheduleId){
         BufferedReader br;
+        System.out.println("tamañoChannels: "+channels.length);
         try {
             br = new BufferedReader(new FileReader(file));
         
@@ -672,17 +673,21 @@ public class BusinessRules {
             JSONObject jsonauxiliarValues = new JSONObject ( auxiliarValues );
             int cont = 0;
             String channelList = "";
+            
             for(int i =0; i<channels.length;i++){
                 channelList = channelList + channels[i] + ",";
                 JSONObject channelData = jsonauxiliarValues.getJSONObject(channels[i]);
-                System.out.println(channelData.toString());
+                System.out.println(channels[i]+channelData.toString());
 
                 long currentPosition = channelData.getLong(Palabras.FINAL_POSITION_FILE);
                 long totalSize = channelData.getLong(Palabras.TOTAL_BYTES);
-                if(currentPosition==totalSize){
+                if(currentPosition==totalSize && totalSize != 0){
+                    System.out.println("incrementa ");
                     cont++;
-                } else
+                } else{
+                    System.out.println("rompe ciclo");
                     break;
+                }
             }
             if(cont==channels.length){
                 //file.delete();

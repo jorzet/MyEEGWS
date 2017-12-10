@@ -15,8 +15,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
@@ -78,7 +82,7 @@ public class DetectionAlgorithm {
         this.source = new Dao();
     }
     
-    public void doDetection(){
+    public Map<String,Double> doDetection(){
         //JSONParser parser = new JSONParser();
         if(recordingFile!=null){
             FileManager fm = new FileManager(recordingFile);
@@ -87,23 +91,25 @@ public class DetectionAlgorithm {
                 //for(int i=0;i<256;i++)
                 //    System.out.print(signal[i]+", ");
                 System.out.println("tamaño:: "+signal.length);
-                classify();
-                
+                Map<String,Double> resultadoCanal= classify();
+                System.out.println("resultadoCanal "+resultadoCanal.size());
+                return resultadoCanal;
             }
         }
         else{
             System.out.println("El archivo no existe");
         }
+        return null;
     }
     
-    private void classify(){
+    private Map<String,Double> classify(){
         List<Integer> waveType = new ArrayList<>();
         List<Double> dominantFrequencys = new ArrayList<>();
         List<Double> channelAmplitudes = new ArrayList<>();
         int secondNumer=0;
         
         System.out.println("\n\nResultados por segundo: \n");
-        for(int j=0;j<signal.length-fm;j+=fm){
+        for(int j=0;j<signal.length;j+=fm){
             double[] second = new double[fm];
             for(int i=0;i<fm;i++){
                     //System.out.println("i: "+i+" j: "+j+" i+j: "+(i+j));
@@ -159,12 +165,15 @@ public class DetectionAlgorithm {
             }
             System.out.println();
             System.out.println("Segundo: " + secondNumer + 1);
+            
             System.out.print("Señal: ");
             String signalString = "";
-            for(int i=0;i<signal.length;i++){
-                System.out.print(signal[i] + ",");
-                signalString = signalString + signal[i] + ",";
+            for(int i=0;i<second.length;i++){
+                System.out.print(second[i] + ",");
+                signalString = signalString + second[i] + ",";
             }
+            System.out.println();
+            System.out.println("tamaño senañ;"+ signalString.length());
             System.out.println("\nAmplitud: "+amplitude);
             System.out.println("Frecuancia: "+frequency);
             System.out.println("Tipo de onda: "+Detector.getWaveTypeString(wave));
@@ -178,6 +187,7 @@ public class DetectionAlgorithm {
             Grabacion grabacion = new Grabacion();
         
             grabacion.setIdGrabacion(mIdGrabacion);
+            resultadosSegmento.setGrabacion(grabacion);
             resultadosSegmento.setSegundo(secondNumer);
             resultadosSegmento.setCanal(currentChannel);
             resultadosSegmento.setFrecuenciaDominante(frequency);
@@ -188,38 +198,58 @@ public class DetectionAlgorithm {
             
         }
         Map<Integer, Integer> percentage = Detector.getWaveTypePercentage(waveType);
+        Map<String,Double> channelPercentage = new TreeMap<>();
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.ALPHA_RHYTHM), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.ALPHA_FREQUENCY), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.BETA_RHYTHM), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.BETA_FREQUENCY), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.DELTA_RHYTHM), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.DELTA_FREQUENCY), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.THETA_RHYTHM), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.THETA_FREQUENCY), 0.0);
+        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.NOT_ANALYZED), 0.0);
         
-        for(int waveTypeNum=0;waveTypeNum<9;waveTypeNum++){
+        for(int waveTypeNum=0;waveTypeNum<10;waveTypeNum++){
             if(percentage.get(waveTypeNum) != null){ // check if the wave type number is contained into percentage HashMap
                 double percenta = percentage.get(waveTypeNum);
                
                 switch(waveTypeNum){
                     case classifiereeg.analyzer.Detector.ALPHA_RHYTHM:
                         percentageAlphaRithm = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.ALPHA_RHYTHM), percentageAlphaRithm);
                         break;
                     case classifiereeg.analyzer.Detector.ALPHA_FREQUENCY:
                         percentageAlphaFrequency = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.ALPHA_FREQUENCY), percentageAlphaFrequency);
                         break;
                     case classifiereeg.analyzer.Detector.BETA_RHYTHM:
                         percentageBetaRithm = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.BETA_RHYTHM), percentageBetaRithm);
                         break;
                     case classifiereeg.analyzer.Detector.BETA_FREQUENCY:
                         percentageBetaFrequency = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.BETA_FREQUENCY), percentageBetaFrequency);
                         break;
                     case classifiereeg.analyzer.Detector.DELTA_RHYTHM:
                         percentageDeltaRithm = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.DELTA_RHYTHM), percentageDeltaRithm);
                         break;
                     case classifiereeg.analyzer.Detector.DELTA_FREQUENCY:
                         percentageDeltaFrequency = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.DELTA_FREQUENCY), percentageDeltaFrequency);
                         break;  
                     case classifiereeg.analyzer.Detector.THETA_RHYTHM:
                         percentageThetaRithm = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.THETA_RHYTHM), percentageThetaRithm);
                         break;
                     case classifiereeg.analyzer.Detector.THETA_FREQUENCY:
                         percentageThetaFrequency = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.THETA_FREQUENCY), percentageThetaFrequency);
                         break;
                     case classifiereeg.analyzer.Detector.NOT_ANALYZED:
                         percentageKnownSignal = (percenta/secondNumer)*100;
+                        channelPercentage.put(Detector.getWaveTypeString(classifiereeg.analyzer.Detector.NOT_ANALYZED), percentageKnownSignal);
+
                         break;
                 }
             }
@@ -252,6 +282,17 @@ public class DetectionAlgorithm {
         double averageChannelAplitudes = channelAmplitudes.isEmpty()? 0 : channelAmplitudes.stream().mapToDouble(Double::doubleValue).sum()/channelAmplitudes.size();
         
         String dominantWaveTypeChannel = "";
+        
+        int max = 0;
+        int maxValueInMap=(Collections.max(percentage.values()));  // This will return max value in the Hashmap
+        for (Entry<Integer, Integer> entry : percentage.entrySet()) {  // Itrate through hashmap
+            if (entry.getValue()==maxValueInMap) {
+                System.out.println("maxHashMap: " + entry.getKey());     // Print the key with max value
+                max = entry.getKey();
+            }
+        }
+        
+        dominantWaveTypeChannel = Detector.getWaveTypeString(max);
         
         
         System.out.println("\n\nResultados por canal\n\n");
@@ -357,5 +398,8 @@ public class DetectionAlgorithm {
         resultadosCanal.setPromedioFrecuenciasFrecuenciaTheta(averageThetaFrequencyFrequency);
         
         source.registrarResultadosCanal(resultadosCanal);
+        
+        System.out.println("channelPercentage: "+ channelPercentage);
+       return channelPercentage;
     }
 }
