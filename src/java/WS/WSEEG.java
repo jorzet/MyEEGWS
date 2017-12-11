@@ -243,13 +243,27 @@ public class WSEEG {
      * @return
      */
     @GET
-    @Path("/getresultsegmentsbyinterval/{jsonResultSegmentsByInterval}")
+    @Path("/getresultsegmentbysecond/{jsonResultSegmentBySecond}")
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public String getResultsSegmentsByInterval(@PathParam("jsonResultSegmentsByInterval") String jsonResultSegmentsByInterval){
+    public String getResultsSegmentBySecond(@PathParam("jsonResultSegmentBySecond") String jsonResultSegmentBySecond){
         BusinessRules rules = new BusinessRules();
-        return rules.obtenerResultadosSegmentosPorIntervalo(jsonResultSegmentsByInterval);
+        return rules.obtenerResultadosSegmentoPorSegundo(jsonResultSegmentBySecond);
     }
     
+    
+    /**
+     * Hecho, Done, terminé
+     * 
+     * @param jsonResultSegmentsByInterval
+     * @return
+     */
+    @GET
+    @Path("/getgeneralresultsbyschedule/{idSchedule}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String getGeneralResultsBySchedule(@PathParam("idSchedule") String idSchedule){
+        BusinessRules rules = new BusinessRules();
+        return rules.obtenerResultadosGenerales(Integer.parseInt(idSchedule));
+    }
     
     /**
      * Hecho, Done, terminé

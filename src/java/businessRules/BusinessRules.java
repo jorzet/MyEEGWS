@@ -325,17 +325,37 @@ public class BusinessRules {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String obtenerResultadosSegmentosPorIntervalo(String jsonResultadosSegmentosPorIntervalo) {
+    public String obtenerResultadosGenerales(int idSchedule) {
         String jsonAnswer;
         int idPaciente;
         int desdeSegundo;
         int hastaSegundo;
         try {
+            
+            ResultadosGenerales respuesta = source.obtenerResultadosGenerales(idSchedule);
+            if(respuesta!=null)
+                jsonAnswer = new Gson().toJson(respuesta);
+            else
+                jsonAnswer = words.ERROR_NOT_GENERAL_RESULTS;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
+    
+    public String obtenerResultadosSegmentoPorSegundo(String jsonResultadosSegmentosPorIntervalo) {
+        String jsonAnswer;
+        int idSchedule;
+        String channel;
+        int second;
+        try {
             JSONObject jsonObject = new JSONObject (jsonResultadosSegmentosPorIntervalo);
-            idPaciente = jsonObject.getInt(words.ID_PATIENT);
-            desdeSegundo = jsonObject.getInt(words.SINCE_SECOND);
-            hastaSegundo = jsonObject.getInt(words.TO_SECOND);
-            ArrayList<ResultadosSegmento> respuesta = source.obtenerResultadosVariosSegmentos(idPaciente, desdeSegundo, hastaSegundo);
+            idSchedule = jsonObject.getInt(words.SCHEDULE_ID);
+            channel = jsonObject.getString(words.CHANNEL_NAME);
+            second = jsonObject.getInt(words.SECOND);
+            ResultadosSegmento respuesta = source.obtenerResultadosSegmento(idSchedule, channel, second);
             if(respuesta!=null)
                 jsonAnswer = new Gson().toJson(respuesta);
             else

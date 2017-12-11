@@ -56,6 +56,7 @@ public class Palabras {
     public static final String DEVICE_NAME = "device_name";
     public static final String DEVICE_MAC_ADDRESS = "device_mac_address";
     public static final String ID_DEVICE = "id_device";
+    public static final String SECOND = "second";
     
     /* to store the recording file */
     public static final String FILE_NAME = "file_name";
@@ -76,6 +77,7 @@ public class Palabras {
     public static final String ERROR_NOT_SPETIALISTS = "Error, la respuesta es nula, no existen especialistas por el momento";
     public static final String ERROR_NOT_PATIENTS = "Error, la respuesta es nula, no existen pacientes por el momento";
     public static final String ERROR_NOT_SCHEDULES = "Error, la respuesta es nula, no existen citas por el momento";
+    public static final String ERROR_NOT_GENERAL_RESULTS = "Error, la respuesta es nula, no existen los resultados generales";
     public static final String ERROR_FROM_JSON = "Ha ocurrido un error, vuelve a intentarlo";
     public static final String SYNTAX_ERROR_FROM_JSON = "Error de sintaxis, asegurate de enviar los datos en formato Json";
     public static final String ERROR_HAPPENED_A_PROBLEM = "Error, ocurrio un problema, intentalo mas tarde";

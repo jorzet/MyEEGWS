@@ -1034,23 +1034,21 @@ public class Dao {
         return resultadoGeneral;
     }
     
-    public ArrayList<ResultadosSegmento> obtenerResultadosVariosSegmentos(int idPaciente, int desdeSegundo, int hastaSegundo){
-        resultadosSegmentos = new ArrayList<>();
+    public ResultadosGenerales obtenerResultadosGenerales(int folioCita){
+        resultadoGeneral = new ResultadosGenerales();
         origen = new DataSource();
         int f = 0;
         try{
             if (origen.iniciaConexion() != null) {
                 System.out.println("Entra");
-                SQL = "{call mostrarResultadosVariosSegmentos (?,?,?,?)}";
+                SQL = "{call mostrarResultadosGenerales (?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
-                sp.setInt(1, idPaciente);
-                sp.setInt(2, desdeSegundo);
-                sp.setInt(3, hastaSegundo);
-                sp.registerOutParameter(4, java.sql.Types.NVARCHAR);
+                sp.setInt(1, folioCita);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 rs = sp.executeQuery();
-                resultado = sp.getString(4);
+                resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;
@@ -1061,19 +1059,16 @@ public class Dao {
                     }
                     else{
                         rs.beforeFirst();
-                        while(rs.next()){
-                            resultadoSegmento = new ResultadosSegmento();
-                            resultadoSegmento.setIdResultadosSegmento(rs.getInt(1));
-                            grabacion = new Grabacion();
-                            grabacion.setIdGrabacion(rs.getInt(2));
-                            resultadoSegmento.setGrabacion(grabacion);
-                            resultadoSegmento.setSegundo(rs.getInt(3));
-                            resultadoSegmento.setCanal(rs.getString(4));
-                            resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
-                            resultadoSegmento.setTipoOnda(rs.getString(6));
-                            resultadoSegmento.setSenal(rs.getString(7));
-                            resultadosSegmentos.add(resultadoSegmento);
-                        }
+                        rs.next();
+                        resultadoGeneral = new ResultadosGenerales();
+                        cita = new Cita();
+                        resultadoGeneral.setIdResultadosGenerales(rs.getInt(1));
+                        cita.setFolioCita(rs.getInt(2));
+                        resultadoGeneral.setCita(cita);
+                        resultadoGeneral.setZonaCerebral(rs.getString(3));
+                        resultadoGeneral.setTipoOndaDominate(rs.getString(4));
+                        resultadoGeneral.setPorcentajeTipoOnda(rs.getDouble(5));
+                        
                     }
                 }
                 else
@@ -1090,7 +1085,66 @@ public class Dao {
                 e.printStackTrace();
             }
         }
-        return resultadosSegmentos;
+        return resultadoGeneral;
+    }
+    
+    
+    public ResultadosSegmento obtenerResultadosSegmento(int idCita, String canal, int segundo){
+        origen = new DataSource();
+        int f = 0;
+        try{
+            if (origen.iniciaConexion() != null) {
+                System.out.println("Entra");
+                SQL = "{call mostrarResultadosPorSegmento (?,?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20);
+                sp.setInt(1, idCita);
+                sp.setString(2, canal);
+                sp.setInt(3, segundo);
+                sp.registerOutParameter(4, java.sql.Types.VARCHAR);
+                rs = sp.executeQuery();
+                resultado = sp.getString(4);
+                if(resultado.equals(words.OK)){
+                    while(rs.next()){
+                        f = f+1;
+                    }
+                    if(f == 0){
+                        System.out.println("Es nulo"+rs);
+                        return null;
+                    }
+                    else{
+                        rs.beforeFirst();
+                        rs.next();
+                        
+                        resultadoSegmento = new ResultadosSegmento();
+                        resultadoSegmento.setIdResultadosSegmento(rs.getInt(1));
+                        grabacion = new Grabacion();
+                        grabacion.setIdGrabacion(rs.getInt(2));
+                        resultadoSegmento.setGrabacion(grabacion);
+                        resultadoSegmento.setSegundo(rs.getInt(3));
+                        resultadoSegmento.setCanal(rs.getString(4));
+                        resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
+                        resultadoSegmento.setTipoOnda(rs.getString(6));
+                        resultadoSegmento.setSenal(rs.getString(7));
+                        
+                    }
+                }
+                else
+                    return null;
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return resultadoSegmento;
     }
     
      public ArrayList<Dispositivo> obtenerDispositivosUsuario(int idPaciente){
