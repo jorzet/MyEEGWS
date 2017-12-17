@@ -212,11 +212,11 @@ public class BusinessRules {
         return jsonAnswer;
     }
     
-    public String obtenerCitasDeEspecialista(int idEspecialista){
+    public String obtenerProximasCitasDeEspecialista(int idEspecialista){
         String jsonAnswer;
         try {
             System.out.println("1");
-            ArrayList<Cita> respuesta = source.obtenerCitasDeEspecialista(idEspecialista);
+            ArrayList<Cita> respuesta = source.obtenerCitasDeEspecialista(idEspecialista, true);
             System.out.println("2");
             if(respuesta!=null){
                 System.out.println(respuesta.size());
@@ -230,6 +230,24 @@ public class BusinessRules {
         return jsonAnswer;
     }
     
+    
+    public String obtenerTodasCitasDeEspecialista(int idEspecialista){
+        String jsonAnswer;
+        try {
+            System.out.println("1");
+            ArrayList<Cita> respuesta = source.obtenerCitasDeEspecialista(idEspecialista, false);
+            System.out.println("2");
+            if(respuesta!=null){
+                System.out.println(respuesta.size());
+                jsonAnswer = new Gson().toJson(respuesta);
+            } else 
+                jsonAnswer = words.ERROR_SCHEDULE_NOT_EXISTS;
+        } catch (Exception ex) {
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
     /*pendiente*/
     public String obtenerEstudioDePaciente(String jsonStudiesByPatient){
         String jsonAnswer;

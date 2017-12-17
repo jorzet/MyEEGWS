@@ -714,7 +714,7 @@ public class Dao {
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
                 sp.setInt(1, idEspecialista);
-                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 rs = sp.executeQuery();
                 resultado = sp.getString(2);
                 if(resultado.equals(words.OK)){
@@ -895,21 +895,25 @@ public class Dao {
         return citas;
     }
     
-    public ArrayList<Cita> obtenerCitasDeEspecialista(int idEspecialista){
+    public ArrayList<Cita> obtenerCitasDeEspecialista(int idEspecialista, boolean afterNow){
         citas = new ArrayList<>();
         origen = new DataSource();
         int f = 0;
         try{
             if (origen.iniciaConexion() != null) {
                 System.out.println("Entra");
-                SQL = "{call obtenerCitasPorEspecialista (?,?)}";
+                if(afterNow)
+                    SQL = "{call obtenerProximasCitasPorEspecialista (?,?)}";
+                else
+                    SQL = "{call obtenerTodasCitasPorEspecialista (?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
                 sp.setInt(1, idEspecialista);
-                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 rs = sp.executeQuery();
                 resultado = sp.getString(2);
+                System.out.println("resultado: "+resultado);
                 if(resultado.equals(words.OK)){
                     while(rs.next()){
                         f = f+1;

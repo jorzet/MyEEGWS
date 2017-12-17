@@ -200,12 +200,20 @@ public class WSEEG {
         return rules.obtenerTodasCitasDePaciente(Integer.parseInt(idPatient));
     }
     
-      @GET
-    @Path("/getspetialistschedules/{idSpetialist}")
+    @GET
+    @Path("/getnextspetialistschedules/{idSpetialist}")
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public String getSpetialistSchedules(@PathParam("idSpetialist") String idSpetialist){
+    public String getNextSpetialistSchedules(@PathParam("idSpetialist") String idSpetialist){
         BusinessRules rules = new BusinessRules();
-        return rules.obtenerCitasDeEspecialista(Integer.parseInt(idSpetialist));
+        return rules.obtenerProximasCitasDeEspecialista(Integer.parseInt(idSpetialist));
+    }
+    
+    @GET
+    @Path("/getallspetialistschedules/{idSpetialist}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String getAllSpetialistSchedules(@PathParam("idSpetialist") String idSpetialist){
+        BusinessRules rules = new BusinessRules();
+        return rules.obtenerTodasCitasDeEspecialista(Integer.parseInt(idSpetialist));
     }
     
     /**
