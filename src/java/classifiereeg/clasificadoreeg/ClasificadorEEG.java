@@ -44,7 +44,7 @@ public class ClasificadorEEG implements Runnable{
 
     @Override
     public void run() {
-        for(int i = 0;i<listFiles.length; i++){
+        /*for(int i = 0;i<listFiles.length; i++){
             DataInputStream in = null;
             DataOutputStream out = null;
             try {
@@ -81,7 +81,7 @@ public class ClasificadorEEG implements Runnable{
                 Logger.getLogger(ClasificadorEEG.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        }
+        }*/
         
         
         Map<String,Double> percentageBrainZone = new TreeMap<>();
@@ -89,7 +89,7 @@ public class ClasificadorEEG implements Runnable{
         System.out.println("litFiles: "+listFiles.length);
         for(int i = 0;i< listFiles.length; i++){
             try {
-                File recordingfile = new File(path + File.separator + listFiles[i] + "-double" + ".bin");
+                File recordingfile = new File(path + File.separator + listFiles[i] + ".bin");
                 Grabacion grabacion = new Grabacion();
                 Cita cita = new Cita();
                 System.out.println("folioCita: " + path);
@@ -98,7 +98,7 @@ public class ClasificadorEEG implements Runnable{
                 cita.setFolioCita(Integer.parseInt(componentsPath[componentsPath.length-1]));
                 folioCita = Integer.parseInt(componentsPath[componentsPath.length-1]);
                 grabacion.setCita(cita);
-                grabacion.setNombreArchivo(path + File.separator + listFiles[i] + "-double" + ".bin");
+                grabacion.setNombreArchivo(path + File.separator + listFiles[i] + ".bin");
                 
                 // Calls procedure storeRecording and this returns the last inser ID
                 int idGrabacion = source.registrarGrabacion(grabacion);

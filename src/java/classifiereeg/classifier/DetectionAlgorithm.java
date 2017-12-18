@@ -107,17 +107,20 @@ public class DetectionAlgorithm {
         List<Double> dominantFrequencys = new ArrayList<>();
         List<Double> channelAmplitudes = new ArrayList<>();
         int secondNumer=0;
-        
+        double mean = Detector.getMean(signal);
+        System.out.println("Mean: " + mean);
         System.out.println("\n\nResultados por segundo: \n");
         for(int j=0;j<signal.length;j+=fm){
             double[] second = new double[fm];
             for(int i=0;i<fm;i++){
                     //System.out.println("i: "+i+" j: "+j+" i+j: "+(i+j));
-                    second[i]=signal[i+j]/gain;
+                    second[i]=signal[i+j];
             }
 
-            for(int i=0;i<fm;i++)
-                second[i] = second[i] - Detector.getMean(second);
+            for(int i=0;i<fm;i++){
+                second[i] = second[i] - mean;
+                second[i] = second[i] / gain;
+            }
                 //System.out.print(second[i]+",");
             
             double amplitude = Detector.getAmplitude(second);
