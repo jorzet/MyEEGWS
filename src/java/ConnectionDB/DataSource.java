@@ -22,7 +22,7 @@ public class DataSource {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             System.out.println("pasa2");
             //String url = "jdbc:mysql://148.204.86.36:3306/BasePT?"+"user=root&password=ipnUPIITA145&?autoReconnect=true&useSSL=false";
-            String url = "jdbc:mysql://localhost:3306/basept?"+"user=root&password=jorzet94&?autoReconnect=true&useSSL=false";
+            String url = "jdbc:mysql://localhost:3306/basept?user=root&password=jorzet94&?autoReconnect=true&useSSL=false";
             System.out.println("pasa3");
             conexion= DriverManager.getConnection(url);
             System.out.println("pasa4");

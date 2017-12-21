@@ -1151,6 +1151,65 @@ public class Dao {
         return resultadoSegmento;
     }
     
+    
+    public ResultadosSegmento obtenerResultadosIntervalo(int idCita, String canal, int sinceSecond, int toSecond){
+        origen = new DataSource();
+        int f = 0;
+        try{
+            if (origen.iniciaConexion() != null) {
+                System.out.println("Entra");
+                SQL = "{call mostrarResultadosPorIntervalo (?,?,?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20);
+                sp.setInt(1, idCita);
+                sp.setString(2, canal);
+                sp.setInt(3, sinceSecond);
+                sp.setInt(4, toSecond);
+                sp.registerOutParameter(5, java.sql.Types.VARCHAR);
+                rs = sp.executeQuery();
+                resultado = sp.getString(5);
+                if(resultado.equals(words.OK)){
+                    while(rs.next()){
+                        f = f+1;
+                    }
+                    if(f == 0){
+                        System.out.println("Es nulo"+rs);
+                        return null;
+                    }
+                    else{
+                        rs.beforeFirst();
+                        rs.next();
+                        
+                        resultadoSegmento = new ResultadosSegmento();
+                        resultadoSegmento.setIdResultadosSegmento(rs.getInt(1));
+                        grabacion = new Grabacion();
+                        grabacion.setIdGrabacion(rs.getInt(2));
+                        resultadoSegmento.setGrabacion(grabacion);
+                        resultadoSegmento.setSegundo(rs.getInt(3));
+                        resultadoSegmento.setCanal(rs.getString(4));
+                        resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
+                        resultadoSegmento.setTipoOnda(rs.getString(6));
+                        resultadoSegmento.setSenal(rs.getString(7));
+                        
+                    }
+                }
+                else
+                    return null;
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return resultadoSegmento;
+    }
      public ArrayList<Dispositivo> obtenerDispositivosUsuario(int idPaciente){
         dispositivos = new ArrayList<>();
         origen = new DataSource();

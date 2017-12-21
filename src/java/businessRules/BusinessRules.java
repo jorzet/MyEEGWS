@@ -385,6 +385,31 @@ public class BusinessRules {
         System.out.println(jsonAnswer);
         return jsonAnswer;
     }
+    
+    public String obtenerResultadosSegmentoPorIntervalo(String jsonResultadosSegmentosPorIntervalo) {
+        String jsonAnswer;
+        int idSchedule;
+        String channel;
+        int sinceSecond;
+        int toSecond;
+        try {
+            JSONObject jsonObject = new JSONObject (jsonResultadosSegmentosPorIntervalo);
+            idSchedule = jsonObject.getInt(words.SCHEDULE_ID);
+            channel = jsonObject.getString(words.CHANNEL_NAME);
+            sinceSecond = jsonObject.getInt(words.SINCE_SECOND);
+            toSecond = jsonObject.getInt(words.TO_SECOND);
+            ResultadosSegmento respuesta = source.obtenerResultadosIntervalo(idSchedule, channel,sinceSecond, toSecond);
+            if(respuesta!=null)
+                jsonAnswer = new Gson().toJson(respuesta);
+            else
+                jsonAnswer = words.ERROR_NOT_SCHEDULES;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
 
     public String requestScheduleAppointment(String jsonSchedule) {
         String respuesta;

@@ -258,6 +258,20 @@ public class WSEEG {
         return rules.obtenerResultadosSegmentoPorSegundo(jsonResultSegmentBySecond);
     }
     
+    /**
+     * Hecho, Done, terminé
+     * 
+     * @param jsonResultSegmentsByInterval
+     * @return
+     */
+    @GET
+    @Path("/getresultsegmentbyinterval/{jsonResultSegmentByInterval}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String getResultsSegmentByInterval(@PathParam("jsonResultSegmentByInterval") String jsonResultSegmentByInterval){
+        BusinessRules rules = new BusinessRules();
+        return rules.obtenerResultadosSegmentoPorIntervalo(jsonResultSegmentByInterval);
+    }
+    
     
     /**
      * Hecho, Done, terminé
