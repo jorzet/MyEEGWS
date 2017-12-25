@@ -349,7 +349,6 @@ public class BusinessRules {
         int desdeSegundo;
         int hastaSegundo;
         try {
-            
             ResultadosGenerales respuesta = source.obtenerResultadosGenerales(idSchedule);
             if(respuesta!=null)
                 jsonAnswer = new Gson().toJson(respuesta);
@@ -398,7 +397,7 @@ public class BusinessRules {
             channel = jsonObject.getString(words.CHANNEL_NAME);
             sinceSecond = jsonObject.getInt(words.SINCE_SECOND);
             toSecond = jsonObject.getInt(words.TO_SECOND);
-            ResultadosSegmento respuesta = source.obtenerResultadosIntervalo(idSchedule, channel,sinceSecond, toSecond);
+            ArrayList<ResultadosSegmento> respuesta = source.obtenerResultadosIntervalo(idSchedule, channel,sinceSecond, toSecond);
             if(respuesta!=null)
                 jsonAnswer = new Gson().toJson(respuesta);
             else

@@ -66,7 +66,7 @@ public class ResultadosGenerales {
      *
      * @param tipoOndaDominante
      */
-    public void setTipoOndaDominate(String tipoOndaDominante){
+    public void setTipoOndaDominate(String tipoOndaDominante) {
         this.tipoOndaDominante = tipoOndaDominante;
     }
     
@@ -74,7 +74,7 @@ public class ResultadosGenerales {
      *
      * @param porcentajeTipoOnda
      */
-    public void setPorcentajeTipoOnda(double porcentajeTipoOnda){
+    public void setPorcentajeTipoOnda(double porcentajeTipoOnda) {
         this.porcentajeTipoOnda = porcentajeTipoOnda;
     }
 }

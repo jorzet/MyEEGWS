@@ -235,7 +235,7 @@ public class Dao {
                 sp.setString(5, cita.getObservaciones());
                 String electrodes = String.join(",", cita.getElectrodos());
                 sp.setString(6, electrodes);
-                sp.registerOutParameter(7, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(7, java.sql.Types.VARCHAR);
                 sp.execute();
                 resultado = sp.getString(7);
             } 
@@ -1068,11 +1068,12 @@ public class Dao {
                         cita = new Cita();
                         resultadoGeneral.setIdResultadosGenerales(rs.getInt(1));
                         cita.setFolioCita(rs.getInt(2));
+                        cita.setElectrodos(rs.getString(3).split(","));
+                        cita.setDuracion(rs.getString(4));
                         resultadoGeneral.setCita(cita);
-                        resultadoGeneral.setZonaCerebral(rs.getString(3));
-                        resultadoGeneral.setTipoOndaDominate(rs.getString(4));
-                        resultadoGeneral.setPorcentajeTipoOnda(rs.getDouble(5));
-                        
+                        resultadoGeneral.setZonaCerebral(rs.getString(5));
+                        resultadoGeneral.setTipoOndaDominate(rs.getString(6));
+                        resultadoGeneral.setPorcentajeTipoOnda(rs.getDouble(7));
                     }
                 }
                 else
@@ -1152,8 +1153,9 @@ public class Dao {
     }
     
     
-    public ResultadosSegmento obtenerResultadosIntervalo(int idCita, String canal, int sinceSecond, int toSecond){
+    public ArrayList<ResultadosSegmento> obtenerResultadosIntervalo(int idCita, String canal, int sinceSecond, int toSecond){
         origen = new DataSource();
+        resultadosSegmentos = new ArrayList<>();
         int f = 0;
         try{
             if (origen.iniciaConexion() != null) {
@@ -1179,19 +1181,21 @@ public class Dao {
                     }
                     else{
                         rs.beforeFirst();
-                        rs.next();
+                        while(rs.next()) {
                         
-                        resultadoSegmento = new ResultadosSegmento();
-                        resultadoSegmento.setIdResultadosSegmento(rs.getInt(1));
-                        grabacion = new Grabacion();
-                        grabacion.setIdGrabacion(rs.getInt(2));
-                        resultadoSegmento.setGrabacion(grabacion);
-                        resultadoSegmento.setSegundo(rs.getInt(3));
-                        resultadoSegmento.setCanal(rs.getString(4));
-                        resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
-                        resultadoSegmento.setTipoOnda(rs.getString(6));
-                        resultadoSegmento.setSenal(rs.getString(7));
-                        
+                            resultadoSegmento = new ResultadosSegmento();
+                            resultadoSegmento.setIdResultadosSegmento(rs.getInt(1));
+                            grabacion = new Grabacion();
+                            grabacion.setIdGrabacion(rs.getInt(2));
+                            resultadoSegmento.setGrabacion(grabacion);
+                            resultadoSegmento.setSegundo(rs.getInt(3));
+                            resultadoSegmento.setCanal(rs.getString(4));
+                            resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
+                            resultadoSegmento.setTipoOnda(rs.getString(6));
+                            resultadoSegmento.setSenal(rs.getString(7));
+
+                            resultadosSegmentos.add(resultadoSegmento);
+                        }
                     }
                 }
                 else
@@ -1208,7 +1212,7 @@ public class Dao {
                 e.printStackTrace();
             }
         }
-        return resultadoSegmento;
+        return resultadosSegmentos;
     }
      public ArrayList<Dispositivo> obtenerDispositivosUsuario(int idPaciente){
         dispositivos = new ArrayList<>();

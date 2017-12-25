@@ -6,6 +6,10 @@
 package WS;
 
 import businessRules.BusinessRules;
+import businessRules.Palabras;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.PUT;
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Context;
@@ -81,8 +85,14 @@ public class WSEEG {
     @Path("/singuppatient/{jsonPatient}")
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public String singUpPatient(@PathParam("jsonPatient") String jsonPatient) {
-        BusinessRules rules = new BusinessRules();
-        return rules.registrarPaciente(jsonPatient);
+        System.out.println(jsonPatient);
+        try {
+            BusinessRules rules = new BusinessRules();
+            return rules.registrarPaciente(java.net.URLDecoder.decode(jsonPatient,"UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(WSEEG.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     /**
@@ -298,7 +308,13 @@ public class WSEEG {
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public String setScheduleAppointment(@PathParam("jsonSchedule") String jsonSchedule){
         BusinessRules rules = new BusinessRules();
-        return rules.requestScheduleAppointment(jsonSchedule);
+        System.out.println("scheduleappointment---");
+        try {
+            return rules.requestScheduleAppointment(java.net.URLDecoder.decode(jsonSchedule,"UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(WSEEG.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Palabras.ERROR_FROM_JSON;
     }
     
     
