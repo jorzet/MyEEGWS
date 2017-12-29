@@ -110,23 +110,26 @@ public class DetectionAlgorithm {
         double mean = Detector.getMean(signal);
         System.out.println("Mean: " + mean);
         System.out.println("\n\nResultados por segundo: \n");
+        
         for(int j=0;j<signal.length;j+=fm){
             double[] second = new double[fm];
+            double[] originalSecond = new double[fm];
             for(int i=0;i<fm;i++){
                     //System.out.println("i: "+i+" j: "+j+" i+j: "+(i+j));
                     second[i]=signal[i+j];
+                    originalSecond[i] = signal[i+j];
             }
 
             for(int i=0;i<fm;i++){
                 second[i] = second[i] - mean;
-                second[i] = second[i] / gain;
+                //second[i] = second[i] / gain;
             }
                 //System.out.print(second[i]+",");
             
             double amplitude = Detector.getAmplitude(second);
             double frequency = Detector.getFrequency(second,fm);
             
-            int wave = Detector.getWaveType(frequency, amplitude);
+            int wave = Detector.getWaveType2(frequency, amplitude);
             
             switch(wave){
                 case classifiereeg.analyzer.Detector.ALPHA_RHYTHM:
@@ -171,9 +174,9 @@ public class DetectionAlgorithm {
             
             System.out.print("Señal: ");
             String signalString = "";
-            for(int i=0;i<second.length;i++){
-                System.out.print(second[i] + ",");
-                signalString = signalString + second[i] + ",";
+            for(int i=0;i<originalSecond.length;i++){
+                System.out.print(originalSecond[i] + ",");
+                signalString = signalString + originalSecond[i] + ",";
             }
             System.out.println();
             System.out.println("tamaño senañ;"+ signalString.length());

@@ -5,6 +5,7 @@
  */
 package classifiereeg.analyzer;
 
+import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -42,46 +43,43 @@ public class Detector {
     public static double getAmplitude(double[] data){
         //System.out.println("abs:");
         double[] abs = getAbs(data);
-        //for(int i=0;i<abs.length;i++)
-        //    System.out.println(abs[i]+",");
-        double max = getMean(abs);
-        //System.out.println("max: "+ max);
+        for(int i=0;i<abs.length;i++)
+            System.out.print(abs[i]+",");
+        System.out.println();
+        double max = getMax(abs);
+            System.out.println("max: "+ max);
         
-        return max * 2;
+        return max;
     }
     
-    public static double getFrequency(double[] data, int fm){
-        double[] vF = Filter.hanning(data);
-       // System.out.println("vf");
-        //for(int i=0;i<vF.length;i++)
-            //System.out.println(vF[i]+", ");
-        Complex[] x = new Complex[vF.length];
-        //System.out.println("Complex");
-        for(int i=0;i<vF.length;i++){
-            x[i] = new Complex(vF[i], 0);
-            //System.out.println(x[i]+",");
+    public static double getFrequency(double[] sampleData, int sampleRate){
+        /* sampleData + zero padding */
+        DoubleFFT_1D fft = new DoubleFFT_1D(sampleData.length + 24 * sampleData.length);
+        double[] a = new double[(sampleData.length + 24 * sampleData.length) * 2];
+
+        System.arraycopy(Filter.applyWindow(sampleData), 0, a, 0, sampleData.length);
+        fft.realForward(a);
+
+        /* find the peak magnitude and it's index */
+        double maxMag = Double.NEGATIVE_INFINITY;
+        int maxInd = -1;
+
+        for(int i = 0; i < a.length / 2; ++i) {
+            double re  = a[2*i];
+            double im  = a[2*i+1];
+            double mag = Math.sqrt(re * re + im * im);
+
+            if(mag > maxMag) {
+                maxMag = mag;
+                maxInd = i;
+            }
         }
-        //System.out.println("FFT ");
-        Complex[] V = FFT.fft(x);
-        //for(int i=0;i<V.length;i++)
-           // System.out.println(V[i]+",");
-        
-        //System.out.println("ABS ");
-        double[] absV = new double[V.length];
-        for(int i=0;i<V.length;i++){
-            absV[i]=V[i].abs();
-            //System.out.println(absV[i]+",");
-        }
-        int L = data.length;
-        double[] f = new double[L]; 
-        for(int i=1;i<L;i++)
-            f[i] = (i*(fm/2))/(L-1);
-        
-        int pos = getMaxPos(absV);
-        
-        return f[pos];
-        //return getMax(absV);
+
+        /* calculate the frequency */
+        return (double)sampleRate * maxInd / (a.length / 2);
     }
+    
+    
     public static String getWaveTypeString(int data){
         switch(data){
             case 0:
@@ -120,6 +118,30 @@ public class Detector {
         else if ((frequency >= 13 && frequency < 30) && ((amplitude > 5 && amplitude < 10) || (amplitude > 15 && amplitude < 25)))
             return BETA_RHYTHM; //Ritmo Beta
         else if ((frequency >= 13 && frequency < 30) && ((amplitude < 5) || (amplitude > 10 && amplitude < 15) || (amplitude > 25)))
+            return BETA_FREQUENCY; //Frecuencia Beta
+        else
+            return NOT_ANALYZED; //No Analizada
+    }
+    
+    
+    
+    // this is a variation f
+    public static int getWaveType2(double frequency, double amplitude){
+        if ((frequency > 0 && frequency < 4) && (amplitude > (63.75/2) && amplitude < (127.5/2)))
+            return DELTA_RHYTHM; //Ritmo Delta
+        else if ((frequency > 0 && frequency < 4) && (amplitude < (63.75/2) || amplitude > (127.5/2)))
+            return DELTA_FREQUENCY; //Frecuencia Delta
+        else if ((frequency >= 4 && frequency < 7) && (amplitude > (63.75/2) && amplitude < (95.625/2)))
+            return THETA_RHYTHM; //Ritmo Theta
+        else if ((frequency >= 4 && frequency < 7) && (amplitude < (63.75/2) || amplitude > (95.625/2)))
+            return THETA_FREQUENCY; //Frecuencia Theta
+        else if ((frequency >= 8 && frequency < 13) && ((amplitude > (25.5/2) && amplitude < (76.5/2)) || (amplitude > (127.5/2) && amplitude < (255/2))) )
+            return ALPHA_RHYTHM; //'Ritmo Alpha'
+        else if ((frequency >= 8 && frequency < 13) && ((amplitude < (25.5/2)) || (amplitude > (76.5/2) && amplitude < (127.5/2)) || (amplitude > (255/2))) )
+            return ALPHA_FREQUENCY; //Frecuencia Alpha
+        else if ((frequency >= 13 && frequency < 30) && ((amplitude > (6.375/2) && amplitude < (12.75/2)) || (amplitude > (19.125/2) && amplitude < (31.875/2))))
+            return BETA_RHYTHM; //Ritmo Beta
+        else if ((frequency >= 13 && frequency < 30) && ((amplitude < (6.375/2)) || (amplitude > (12.75/2) && amplitude < (19.125/2)) || (amplitude > (31.875/2))))
             return BETA_FREQUENCY; //Frecuencia Beta
         else
             return NOT_ANALYZED; //No Analizada
