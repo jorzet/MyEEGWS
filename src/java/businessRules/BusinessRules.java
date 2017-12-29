@@ -82,9 +82,10 @@ public class BusinessRules {
             String respuesta = source.obtenerDatosUsuario(email,hashPassword);
             if(respuesta != null){
                 if(!respuesta.contains("Message") && !respuesta.contains("Error")){
+                    JSONObject jsonLogin = new JSONObject(respuesta);
                     JSONObject json = new JSONObject();
                     try {
-                        json.put(Palabras.USER, respuesta);
+                        json.put(Palabras.USER, jsonLogin);
                         json.put(Palabras.TOKEN, AccessToken.getAccessToken(respuesta));
                     } catch (JSONException ex) {
                         Logger.getLogger(JSONErrorBuilder.class.getName()).log(Level.SEVERE, null, ex);
