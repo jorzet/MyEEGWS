@@ -64,7 +64,7 @@ public class GoogleMail {
         }
     }
     
-    public static int sendEmailAndPassword(String emailUser, String passwordUser){
+    public static int sendEmailAndPassword(String emailUser, String passwordUser, boolean isRestore){
         int result;
         final String username = "proyecto.terminal.myeeg@gmail.com";
         final String password = "proyectoterminal2";
@@ -88,7 +88,11 @@ public class GoogleMail {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(emailUser));
-            message.setSubject(Palabras.EMAIL_SINGUP_SUBJECT);
+            if(isRestore)
+                message.setSubject(Palabras.EMAIL_RESTART_PASSWORD_SUBJECT);
+            else
+                message.setSubject(Palabras.EMAIL_SINGUP_SUBJECT);
+            
             message.setText(Palabras.YOUR_EMAIL_IS + emailUser + "\n\n"
                     + Palabras.YOUR_PASSWORD_IS + passwordUser);
 

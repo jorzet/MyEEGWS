@@ -257,7 +257,7 @@ public class WSEEG {
     /**
      * Hecho, Done, terminé
      * 
-     * @param jsonResultSegmentsByInterval
+     * @param jsonResultSegmentBySecond
      * @return
      */
     @GET
@@ -271,7 +271,7 @@ public class WSEEG {
     /**
      * Hecho, Done, terminé
      * 
-     * @param jsonResultSegmentsByInterval
+     * @param jsonResultSegmentByInterval
      * @return
      */
     @GET
@@ -282,11 +282,24 @@ public class WSEEG {
         return rules.obtenerResultadosSegmentoPorIntervalo(jsonResultSegmentByInterval);
     }
     
+    /**
+     * Hecho, Done, terminé
+     * 
+     * @param jsonChannelResult
+     * @return
+     */
+    @GET
+    @Path("/getchannelresultbyschedule/{jsonChannelResult}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String getChannelResultsBySchedule(@PathParam("jsonChannelResult") String jsonChannelResult){
+        BusinessRules rules = new BusinessRules();
+        return rules.obtenerResultadosPorCanal(jsonChannelResult);
+    }
     
     /**
      * Hecho, Done, terminé
      * 
-     * @param jsonResultSegmentsByInterval
+     * @param idSchedule
      * @return
      */
     @GET
@@ -332,6 +345,45 @@ public class WSEEG {
         return rules.requestUpdateSchedule(jsonUpdateSchedule);
     }
     
+    /**
+     * Hecho, Done, terminé
+     * 
+     * @param jsonUpdateSpetialistData
+     * @return
+     */
+    @GET
+    @Path("/requestupdatespetialistdata/{jsonUpdateSpetialistData}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String requestUpdateSpetialistData(@PathParam("jsonUpdateSpetialistData") String jsonUpdateSpetialistData){
+        BusinessRules rules = new BusinessRules();
+        try {
+            return rules.requestUpdateSpetialistData(java.net.URLDecoder.decode(jsonUpdateSpetialistData,"UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(WSEEG.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Palabras.ERROR_FROM_JSON;
+    }
+    
+    /**
+     * Hecho, Done, terminé
+     * 
+     * @param jsonUpdatePatientData
+     * @return
+     */
+    @GET
+    @Path("/requestupdatepatientdata/{jsonUpdatePatientData}")
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public String requestUpdatePatientData(@PathParam("jsonUpdatePatientData") String jsonUpdatePatientData){
+        BusinessRules rules = new BusinessRules();
+        try {
+            return rules.requestUpdatePatientData(java.net.URLDecoder.decode(jsonUpdatePatientData,"UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(WSEEG.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Palabras.ERROR_FROM_JSON;
+    }
     
     
     /**

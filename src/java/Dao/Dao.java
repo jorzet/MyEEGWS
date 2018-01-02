@@ -238,6 +238,7 @@ public class Dao {
                 sp.registerOutParameter(7, java.sql.Types.VARCHAR);
                 sp.execute();
                 resultado = sp.getString(7);
+                System.out.println(resultado);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -568,6 +569,7 @@ public class Dao {
                         paciente.setEmail(rs.getString(8));
                         paciente.setGender(rs.getString(9));
                         paciente.setProfilePhoto(rs.getBytes(10));
+                        paciente.setPassword(rs.getString(11));
                     }
                 }
                 else 
@@ -627,6 +629,7 @@ public class Dao {
                     especialista.setEmail(rs.getString(5));
                     especialista.setGender(rs.getString(6));
                     especialista.setProfilePhoto(rs.getBytes(7));
+                    especialista.setPassword(rs.getString(8));
                 }
                 
             } 
@@ -1214,6 +1217,82 @@ public class Dao {
         }
         return resultadosSegmentos;
     }
+    
+    public ArrayList<ResultadosCanal> obtenerResultadosCanal(int idCita, String canal){
+        origen = new DataSource();
+        int f = 0;
+        resultadosCanales = new ArrayList<>();
+        try{
+            if (origen.iniciaConexion() != null) {
+                System.out.println("Entra");
+                SQL = "{call mostrarResultadosPorCanal (?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20);
+                sp.setInt(1, idCita);
+                sp.setString(2, canal);
+                sp.registerOutParameter(3, java.sql.Types.VARCHAR);
+                rs = sp.executeQuery();
+                resultado = sp.getString(3);
+                if(resultado.equals(words.OK)){
+                    while(rs.next()){
+                        f = f+1;
+                    }
+                    if(f == 0){
+                        System.out.println("Es nulo"+rs);
+                        return null;
+                    }
+                    else{
+                        rs.beforeFirst();
+                        rs.next();
+                        
+                        resultadoCanal = new ResultadosCanal();
+                        resultadoCanal.setIdResultadosCanal(rs.getInt(1));
+                        Grabacion grabacion = new Grabacion();
+                        grabacion.setIdGrabacion(rs.getInt(2));
+                        resultadoCanal.setGrabacion(grabacion);
+                        resultadoCanal.setCanal(rs.getString(3));
+                        resultadoCanal.setTipoOndaDominanteCanal(rs.getString(4));
+                        resultadoCanal.setFrecuenciaDominanteCanal(rs.getDouble(5));
+                        resultadoCanal.setPromedioAmplitudesCanal(rs.getDouble(6));
+                        resultadoCanal.setPorcentajeAparicionRitmoAlpha(rs.getDouble(7));
+                        resultadoCanal.setPorcentajeAparicionRitmoBeta(rs.getDouble(8));
+                        resultadoCanal.setPorcentajeAparicionRitmoDelta(rs.getDouble(9));
+                        resultadoCanal.setPorcentajeAparicionRitmoTheta(rs.getDouble(10));
+                        resultadoCanal.setPorcentajeAparicionFrecuenciaAlpha(rs.getDouble(11));
+                        resultadoCanal.setPorcentajeAparicionFrecuenciaBeta(rs.getDouble(12));
+                        resultadoCanal.setPorcentajeAparicionFrecuenciaDelta(rs.getDouble(13));
+                        resultadoCanal.setPorcentajeAparicionFrecuenciaTheta(rs.getDouble(14));
+                        resultadoCanal.setPromedioAmplitudesRitmoAlpha(rs.getDouble(15));
+                        resultadoCanal.setPromedioAmplitudesRitmoBeta(rs.getDouble(16));
+                        resultadoCanal.setPromedioAmplitudesRitmoDelta(rs.getDouble(17));
+                        resultadoCanal.setPromedioAmplitudesRitmoTheta(rs.getDouble(18));
+                        resultadoCanal.setPromedioAmplitudesFrecuenciaAlpha(rs.getDouble(19));
+                        resultadoCanal.setPromedioAmplitudesFrecuenciaBeta(rs.getDouble(20));
+                        resultadoCanal.setPromedioAmplitudesFrecuenciaDelta(rs.getDouble(21));
+                        resultadoCanal.setPromedioAmplitudesFrecuenciaTheta(rs.getDouble(22));
+                        
+                        resultadosCanales.add(resultadoCanal);
+                    }
+                }
+                else
+                    return null;
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return resultadosCanales;
+    }
+    
+    
      public ArrayList<Dispositivo> obtenerDispositivosUsuario(int idPaciente){
         dispositivos = new ArrayList<>();
         origen = new DataSource();
@@ -1512,6 +1591,94 @@ public class Dao {
             }
         }
         return query;
+    }
+    
+    public String actualizarDatosEspecialista(Especialista spetialist){
+        String jsonQuery = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call actualizarDatosEspecialista (?,?,?,?,?,?,?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setInt(1, spetialist.getId());
+                sp.setString(2, spetialist.getName());
+                sp.setString(3, spetialist.getFirstLastName());
+                sp.setString(4, spetialist.getSecondLastName());
+                sp.setString(5, spetialist.getEmail());
+                sp.setString(6, spetialist.getPassword());
+                sp.setString(7, spetialist.getGender());
+                sp.setBytes(8, spetialist.getPrifilePhoto());
+                sp.registerOutParameter(9, java.sql.Types.VARCHAR);
+                sp.execute();
+                jsonQuery = sp.getString(9);
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return jsonQuery;
+    }
+    
+    
+    public String actualizarDatosPaciente(Paciente patient){
+        String jsonQuery = "";
+        int f = 0; 
+        origen = new DataSource();
+        
+        String message;
+        int Error;
+        try{
+            if (origen.iniciaConexion() != null) {
+                SQL = "{call actualizarDatosPaciente (?,?,?,?,?,?,?,?,?,?,?)}";
+                sp = origen.conexion.prepareCall(SQL);
+                sp.setEscapeProcessing(true);
+                sp.setQueryTimeout(20); 
+                
+                sp.setInt(1, patient.getId());
+                sp.setString(2, patient.getName());
+                sp.setString(3, patient.getFirstLastName());
+                sp.setString(4, patient.getSecondLastName());
+                sp.setString(5, patient.getPadecimiento());
+                sp.setInt(6, patient.getAge());
+                sp.setString(7, patient.getEmail());
+                sp.setString(8, patient.getPassword());
+                sp.setString(9, patient.getGender());
+                sp.setBytes(10, patient.getPrifilePhoto());
+                
+                sp.registerOutParameter(11, java.sql.Types.VARCHAR);
+                sp.execute();
+                jsonQuery = sp.getString(11);
+               
+            } 
+        }catch(SQLException e){
+            e.printStackTrace();
+            resultado = null;
+        } finally{
+            try{
+                origen.cerrarConexion();
+                if(sp != null)
+                    sp.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return jsonQuery;
     }
     
 }

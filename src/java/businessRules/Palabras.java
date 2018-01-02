@@ -78,6 +78,7 @@ public class Palabras {
     public static final String ERROR_NOT_PATIENTS = "Error, la respuesta es nula, no existen pacientes por el momento";
     public static final String ERROR_NOT_SCHEDULES = "Error, la respuesta es nula, no existen citas por el momento";
     public static final String ERROR_NOT_GENERAL_RESULTS = "Error, no existen los resultados generales de esta cita";
+    public static final String ERROR_CHANNEL_RESULTS = "Error, no existen resultados del canal selaccionado";
     public static final String ERROR_FROM_JSON = "Ha ocurrido un error, vuelve a intentarlo";
     public static final String SYNTAX_ERROR_FROM_JSON = "Error de sintaxis, asegurate de enviar los datos en formato Json";
     public static final String ERROR_HAPPENED_A_PROBLEM = "Error, ocurrio un problema, intentalo mas tarde";
@@ -90,8 +91,8 @@ public class Palabras {
     
     /* to send email */
     public static final String EMAIL_SINGUP_SUBJECT = "Registro de usuario";
-    public static final String EMAIL_RESTART_PASSWORD_SUBJECT = "Recuperacion de contraseña";
-    public static final String YOUR_EMAIL_IS = "Tu correo electronico es: ";
+    public static final String EMAIL_RESTART_PASSWORD_SUBJECT = "Recuperación de contraseña";
+    public static final String YOUR_EMAIL_IS = "Tu correo electrónico es: ";
     public static final String YOUR_PASSWORD_IS = "Tu contraseña es: ";
     public static final String YOUR_CONFIRMATION_DODE_IS = "Tu codigo de confirmacion es: ";
     public static final String EMAIL_SENDED = "Se envio un email a tu correo electronico";

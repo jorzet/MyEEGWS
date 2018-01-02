@@ -142,6 +142,7 @@ public class BusinessRules {
         try {
             patient = gson.fromJson(jsonRegistroPaciente, Paciente.class);
             jsonAnswer = gson.toJson(source.registrarPaciente(patient));
+            GoogleMail.sendEmailAndPassword(patient.getEmail(), patient.getPassword(), false);
         } catch (JsonSyntaxException ex) {
             jsonAnswer = words.ERROR_FROM_JSON;
         }
@@ -161,6 +162,7 @@ public class BusinessRules {
         try {
             spetialist = new Gson().fromJson(jsonRegistroMedico, Especialista.class);
             jsonAnswer = new Gson().toJson(source.registrarEspecialista(spetialist));
+            GoogleMail.sendEmailAndPassword(spetialist.getEmail(), spetialist.getPassword(), false);
         } catch (JsonSyntaxException ex) {
             jsonAnswer = words.ERROR_FROM_JSON;
         }
@@ -410,15 +412,37 @@ public class BusinessRules {
         System.out.println(jsonAnswer);
         return jsonAnswer;
     }
+    
+    public String obtenerResultadosPorCanal(String jsonResultadosPorCanal) {
+        String jsonAnswer;
+        int idSchedule;
+        String channel;
+        try {
+            JSONObject jsonObject = new JSONObject (jsonResultadosPorCanal);
+            idSchedule = jsonObject.getInt(words.SCHEDULE_ID);
+            channel = jsonObject.getString(words.CHANNEL_NAME);
+            ArrayList<ResultadosCanal> respuesta = source.obtenerResultadosCanal(idSchedule, channel);
+            if(respuesta!=null)
+                jsonAnswer = new Gson().toJson(respuesta);
+            else
+                jsonAnswer = words.ERROR_CHANNEL_RESULTS;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
 
     public String requestScheduleAppointment(String jsonSchedule) {
         String respuesta;
         String jsonAnswer;
         schedule = new Cita();
         JSONObject json;
-        
+        System.out.println(jsonSchedule);
         try {
             schedule = gson.fromJson(jsonSchedule, Cita.class);
+            System.out.println("json: "+schedule);
             jsonAnswer = gson.toJson(source.registrarCita(schedule));
         } catch (JsonSyntaxException ex) {
             jsonAnswer = words.ERROR_FROM_JSON;
@@ -434,6 +458,38 @@ public class BusinessRules {
         try {
             schedule = gson.fromJson(jsonUpdateSchedule, Cita.class);
             jsonAnswer = gson.toJson(source.actualizarDatosCita(schedule));
+        } catch (JsonSyntaxException ex) {
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
+    
+    public String requestUpdatePatientData(String jsonUpdatePatientData){
+        String response;
+        patient = new Paciente();
+        String jsonAnswer;
+        try {
+            System.out.println("actualizacion: "+jsonUpdatePatientData);
+            patient = gson.fromJson(jsonUpdatePatientData, Paciente.class);
+            jsonAnswer = gson.toJson(source.actualizarDatosPaciente(patient));
+            System.out.println(jsonAnswer);
+        } catch (JsonSyntaxException ex) {
+            jsonAnswer = words.ERROR_FROM_JSON;
+        }
+        System.out.println(jsonAnswer);
+        return jsonAnswer;
+    }
+    
+    public String requestUpdateSpetialistData(String jsonUpdateSpetialistData){
+        String response;
+        spetialist = new Especialista();
+        String jsonAnswer;
+        try {
+            System.out.println("actualizacion: "+jsonUpdateSpetialistData);
+            spetialist = gson.fromJson(jsonUpdateSpetialistData, Especialista.class);
+            jsonAnswer = gson.toJson(source.actualizarDatosEspecialista(spetialist));
+            System.out.println(jsonAnswer);
         } catch (JsonSyntaxException ex) {
             jsonAnswer = words.ERROR_FROM_JSON;
         }
@@ -820,7 +876,7 @@ public class BusinessRules {
             response = source.obtenerDatosUsuario(email);
             if(response != null){
                 String[] res = response.split(",");
-                GoogleMail.sendEmailAndPassword(res[0], res[1]);
+                GoogleMail.sendEmailAndPassword(res[0], res[1], true);
                 response = words.EMAIL_SENDED;
             } else {
                 response = words.ERROR_USER_NOT_EXISTS;
