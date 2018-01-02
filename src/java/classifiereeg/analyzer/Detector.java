@@ -79,6 +79,10 @@ public class Detector {
         return (double)sampleRate * maxInd / (a.length / 2);
     }
     
+    public static boolean isAnormal(double amplitude, double frequency, int age){
+        return false;
+    }
+    
     
     public static String getWaveTypeString(int data){
         switch(data){

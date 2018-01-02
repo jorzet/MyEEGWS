@@ -17,6 +17,7 @@ public class ResultadosSegmento {
     private double frecuenciaDominante;
     private String tipoOnda;
     private String senal;
+    private boolean anormal;
     
     public ResultadosSegmento(){}
     
@@ -46,6 +47,10 @@ public class ResultadosSegmento {
     
     public String getSenal(){
         return this.senal;
+    }
+    
+    public boolean isAnormal(){
+        return this.anormal;
     }
     
     /**
@@ -102,6 +107,10 @@ public class ResultadosSegmento {
      */
     public void setSenal(String senal){
         this.senal = senal;
+    }
+    
+    public void setIsAnormal(boolean anormal){
+        this.anormal = anormal;
     }
     
 }

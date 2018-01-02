@@ -1135,7 +1135,7 @@ public class Dao {
                         resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
                         resultadoSegmento.setTipoOnda(rs.getString(6));
                         resultadoSegmento.setSenal(rs.getString(7));
-                        
+                        resultadoSegmento.setIsAnormal(rs.getBoolean(8));
                     }
                 }
                 else
@@ -1196,6 +1196,7 @@ public class Dao {
                             resultadoSegmento.setFrecuenciaDominante(rs.getFloat(5));
                             resultadoSegmento.setTipoOnda(rs.getString(6));
                             resultadoSegmento.setSenal(rs.getString(7));
+                            resultadoSegmento.setIsAnormal(rs.getBoolean(8));
 
                             resultadosSegmentos.add(resultadoSegmento);
                         }
@@ -1271,6 +1272,7 @@ public class Dao {
                         resultadoCanal.setPromedioAmplitudesFrecuenciaBeta(rs.getDouble(20));
                         resultadoCanal.setPromedioAmplitudesFrecuenciaDelta(rs.getDouble(21));
                         resultadoCanal.setPromedioAmplitudesFrecuenciaTheta(rs.getDouble(22));
+                        resultadoCanal.setIsAnormal(rs.getBoolean(23));
                         
                         resultadosCanales.add(resultadoCanal);
                     }

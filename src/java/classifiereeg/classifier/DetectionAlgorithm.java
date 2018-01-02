@@ -42,6 +42,8 @@ public class DetectionAlgorithm {
     private double[] signal;
     private String currentChannel;
     
+    private int userAge = 23;
+    
     private double percentageAlphaRithm = 0;
     private double percentageAlphaFrequency = 0;
     private double percentageBetaRithm = 0;
@@ -199,6 +201,7 @@ public class DetectionAlgorithm {
             resultadosSegmento.setFrecuenciaDominante(frequency);
             resultadosSegmento.setTipoOnda(Detector.getWaveTypeString(wave));
             resultadosSegmento.setSenal(signalString);
+            resultadosSegmento.setIsAnormal(Detector.isAnormal(amplitude, frequency, userAge));
             
             source.registrarResultadosSegmento(resultadosSegmento);
             
@@ -402,6 +405,8 @@ public class DetectionAlgorithm {
         resultadosCanal.setPromedioFrecuenciasFrecuenciaBeta(averageBetaFrequencyFrequency);
         resultadosCanal.setPromedioFrecuenciasFrecuenciaDelta(averageDeltaFrequencyFrequency);
         resultadosCanal.setPromedioFrecuenciasFrecuenciaTheta(averageThetaFrequencyFrequency);
+        
+        resultadosCanal.setIsAnormal(Detector.isAnormal(averageChannelAplitudes, dominantFrequencyChannel, userAge));
         
         source.registrarResultadosCanal(resultadosCanal);
         

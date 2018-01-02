@@ -41,6 +41,7 @@ public class ResultadosCanal {
     private double promedioFrecuenciasFrecuenciaBeta;
     private double promedioFrecuenciasFrecuenciaDelta;
     private double promedioFrecuenciasFrecuenciaTheta;
+    private boolean anormal;
     
     public ResultadosCanal(){}
     
@@ -162,6 +163,10 @@ public class ResultadosCanal {
     
     public double getPromedioFrecuenciasFrecuenciaTheta(){
         return this.promedioFrecuenciasFrecuenciaTheta;
+    }
+    
+    public boolean isAnormal(){
+        return this.anormal;
     }
     
     /**
@@ -399,6 +404,10 @@ public class ResultadosCanal {
      */
     public void setPromedioFrecuenciasFrecuenciaTheta(double promedioFrecuenciasFrecuenciaTheta){
         this.promedioFrecuenciasFrecuenciaTheta = promedioFrecuenciasFrecuenciaTheta;
+    }
+    
+    public void setIsAnormal(boolean anormal){
+        this.anormal = anormal;
     }
     
 }
