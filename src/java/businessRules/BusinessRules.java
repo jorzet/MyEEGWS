@@ -877,7 +877,7 @@ public class BusinessRules {
             if(response != null){
                 String[] res = response.split(",");
                 GoogleMail.sendEmailAndPassword(res[0], res[1], true);
-                response = words.EMAIL_SENDED;
+                response = words.EMAIL_SENT;
             } else {
                 response = words.ERROR_USER_NOT_EXISTS;
             }

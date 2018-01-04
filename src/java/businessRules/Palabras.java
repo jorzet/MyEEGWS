@@ -95,7 +95,7 @@ public class Palabras {
     public static final String YOUR_EMAIL_IS = "Tu correo electrónico es: ";
     public static final String YOUR_PASSWORD_IS = "Tu contraseña es: ";
     public static final String YOUR_CONFIRMATION_DODE_IS = "Tu codigo de confirmacion es: ";
-    public static final String EMAIL_SENDED = "Se envio un email a tu correo electronico";
+    public static final String EMAIL_SENT = "Se envio un email a tu correo electronico";
     
     public static final String OK ="OK";
     public static final String SUCESSFULL_SINGUP = "Usuario registrado correctamente";
