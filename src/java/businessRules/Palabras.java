@@ -39,6 +39,8 @@ public class Palabras {
     public static final int CODE_SUCESSFULL_STORE_CHANEL_RESULTS =      0xA0;
     public static final int CODE_SUCESSFULL_STORE_SEGMENT_RESULTS =     0xA1;
     public static final int CODE_SUCESSFULL_TRANSFER_FILES_COMPLETE =     0xA2;
+    public static final int CODE_ERROR_IN_SENDING_EMAIL =               0xA3;
+    public static final int CODE_SUCESSFULL_EMAIL_SENT =                0xA4;
     //public static final int CODE_SUCESSFULL_STORE_RECORDING =           0x16;
     
     

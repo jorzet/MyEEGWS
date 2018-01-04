@@ -879,11 +879,11 @@ public class BusinessRules {
                 GoogleMail.sendEmailAndPassword(res[0], res[1], true);
                 response = words.EMAIL_SENT;
             } else {
-                response = words.ERROR_USER_NOT_EXISTS;
+                response = JSONErrorBuilder.buildJson(Palabras.CODE_ERROR_IN_SENDING_EMAIL,Palabras.ERROR_USER_NOT_EXISTS);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            response = words.ERROR_FROM_JSON;
+            response = JSONErrorBuilder.buildJson(Palabras.CODE_ERROR_FROM_JSON, Palabras.ERROR_FROM_JSON);
         }
         System.out.println(response);
         return response;
