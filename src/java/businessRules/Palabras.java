@@ -41,6 +41,10 @@ public class Palabras {
     public static final int CODE_SUCESSFULL_TRANSFER_FILES_COMPLETE =     0xA2;
     public static final int CODE_ERROR_IN_SENDING_EMAIL =               0xA3;
     public static final int CODE_SUCESSFULL_EMAIL_SENT =                0xA4;
+    public static final int CODE_ERROR_SCHEDULE_NOT_EXCISTS =           0xA5;
+    public static final int CODE_ERROR_PATIENT_TO_DROP_NOT_EXISTS =     0xA6;
+    public static final int CODE_SUCCESS_SCHEDULE_NOT_EXCISTS =         0xA7;
+    public static final int CODE_SUCCESS_PATIENT_TO_DROP_NOT_EXISTS =     0xA8;
     //public static final int CODE_SUCESSFULL_STORE_RECORDING =           0x16;
     
     
@@ -90,6 +94,8 @@ public class Palabras {
     public static final String ERROR_SCHEDULE_NOT_EXISTS = "Error, la cita no existe";
     public static final String ERROR_STUDY_NOT_EXISTS = "Error, no existe el estudio correspondiente al usuario";
     public static final String ERROR_INCORRECT_EMAIL_OR_PASSWORD = "Error, el usuario y/o contraseña son invalidos";
+    public static final String ERROR_SCHEDULE_TO_DROP_NOT_EXISTS = "Error, no existe la cita a eliminar";
+    public static final String ERROR_PATIENT_TO_DROP_NOT_EXISTS = "Error, no existe el paciente a eliminar";
     
     /* to send email */
     public static final String EMAIL_SINGUP_SUBJECT = "Registro de usuario";

@@ -836,6 +836,12 @@ public class BusinessRules {
         String jsonAnswer = "";
         try {
             jsonAnswer = source.eliminarCita(idSchedule);
+            if (jsonAnswer.equals(Palabras.ERROR_SCHEDULE_TO_DROP_NOT_EXISTS)){
+                System.out.println("entra error");
+                jsonAnswer = JSONErrorBuilder.buildJson(Palabras.CODE_ERROR_SCHEDULE_NOT_EXCISTS, jsonAnswer);
+            } else 
+                jsonAnswer = JSONSuccessBuilder.buildJson(Palabras.CODE_SUCCESS_SCHEDULE_NOT_EXCISTS, jsonAnswer);
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             jsonAnswer = words.ERROR_FROM_JSON;
@@ -848,6 +854,10 @@ public class BusinessRules {
         String jsonAnswer = "";
         try {
             jsonAnswer = source.eliminarPaciente(idPatient);
+            if (jsonAnswer.equals(Palabras.ERROR_PATIENT_TO_DROP_NOT_EXISTS))
+                jsonAnswer = JSONErrorBuilder.buildJson(Palabras.CODE_ERROR_PATIENT_TO_DROP_NOT_EXISTS, jsonAnswer);
+            else 
+                jsonAnswer = JSONSuccessBuilder.buildJson(Palabras.CODE_SUCCESS_PATIENT_TO_DROP_NOT_EXISTS, jsonAnswer);
         } catch (Exception ex) {
             ex.printStackTrace();
             jsonAnswer = words.ERROR_FROM_JSON;
@@ -860,7 +870,8 @@ public class BusinessRules {
     public String requestDropSpetialist(int idSpetialist){
         String jsonAnswer = "";
         try {
-            jsonAnswer = source.eliminarPaciente(idSpetialist);
+            jsonAnswer = source.eliminarEspecialista(idSpetialist);
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             jsonAnswer = words.ERROR_FROM_JSON;

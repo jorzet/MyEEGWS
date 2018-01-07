@@ -333,7 +333,7 @@ public class Dao {
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
-                SQL = "{call insertarResultadosSegmento(?,?,?,?,?,?,?)}";
+                SQL = "{call insertarResultadosSegmento(?,?,?,?,?,?,?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
@@ -344,9 +344,10 @@ public class Dao {
                 sp.setDouble(4, resultadosSegmento.getFrecuenciaDominante());
                 sp.setString(5, resultadosSegmento.getTipoOnda());
                 sp.setString(6, resultadosSegmento.getSenal());
-                sp.registerOutParameter(7, java.sql.Types.NVARCHAR);
+                sp.setBoolean(7, resultadosSegmento.isAnormal());
+                sp.registerOutParameter(8, java.sql.Types.VARCHAR);
                 sp.execute();
-                resultado = sp.getString(7);
+                resultado = sp.getString(8);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -369,7 +370,7 @@ public class Dao {
         origen = new DataSource();
         try{
             if (origen.iniciaConexion() != null) {
-                SQL = "{call insertarResultadosCanal (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                SQL = "{call insertarResultadosCanal (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 sp = origen.conexion.prepareCall(SQL);
                 sp.setEscapeProcessing(true);
                 sp.setQueryTimeout(20);
@@ -406,9 +407,11 @@ public class Dao {
                 sp.setDouble(28, resultadosCanal.getPromedioFrecuenciasFrecuenciaDelta());
                 sp.setDouble(29, resultadosCanal.getPromedioFrecuenciasFrecuenciaTheta());
                 
-                sp.registerOutParameter(30, java.sql.Types.VARCHAR);
+                sp.setBoolean(30, resultadosCanal.isAnormal());
+                
+                sp.registerOutParameter(31, java.sql.Types.VARCHAR);
                 sp.execute();
-                resultado = sp.getString(30);
+                resultado = sp.getString(31);
             } 
         }catch(SQLException e){
             e.printStackTrace();
@@ -812,6 +815,8 @@ public class Dao {
                             cita.setHora(rs.getTime(4).toString());
                             cita.setDuracion(rs.getTime(5).toString());
                             cita.setObservaciones(rs.getString(6));
+                            String[] electrodes = rs.getString(7).split(",");
+                            cita.setElectrodos(electrodes);
                         }
                     }
                 }
@@ -1448,7 +1453,7 @@ public class Dao {
                 sp.setQueryTimeout(20); 
                 
                 sp.setInt(1, idSchedule);
-                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 sp.execute();
                 jsonQuery = sp.getString(2);
                
@@ -1484,7 +1489,7 @@ public class Dao {
                 sp.setQueryTimeout(20); 
                 
                 sp.setInt(1, idPatient);
-                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 sp.execute();
                 jsonQuery = sp.getString(2);
                
@@ -1505,7 +1510,7 @@ public class Dao {
     }
     
     
-    public String eliminarespecialista(int idSpetialist){
+    public String eliminarEspecialista(int idSpetialist){
         String jsonQuery = "";
         int f = 0; 
         origen = new DataSource();
@@ -1520,7 +1525,7 @@ public class Dao {
                 sp.setQueryTimeout(20); 
                 
                 sp.setInt(1, idSpetialist);
-                sp.registerOutParameter(2, java.sql.Types.NVARCHAR);
+                sp.registerOutParameter(2, java.sql.Types.VARCHAR);
                 sp.execute();
                 jsonQuery = sp.getString(2);
                
