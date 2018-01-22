@@ -44,30 +44,32 @@ public class ClasificadorEEG implements Runnable{
 
     @Override
     public void run() {
-        /*for(int i = 0;i<listFiles.length; i++){
+        for(int i = 0;i<listFiles.length; i++){
             DataInputStream in = null;
             DataOutputStream out = null;
             try {
                 in = new DataInputStream(new FileInputStream(path + File.separator + listFiles[i] +".bin"));
-                File aux = new File(path + File.separator + listFiles[i] + "-double" + ".bin");
+                File aux = new File(path + File.separator + listFiles[i] + "-int" + ".bin");
                 if(!aux.exists())
                     aux.createNewFile();
                 
-                out = new DataOutputStream(new FileOutputStream(path + File.separator + listFiles[i] + "-double" + ".bin"));
+                out = new DataOutputStream(new FileOutputStream(path + File.separator + listFiles[i] + "-int" + ".bin"));
                 int j = 0;
                 while (in.available()>0) {
-                    double val = in.readByte();
-                    double doubleVal = ((val*100)/255);
-                    out.writeDouble(doubleVal);  
+                    byte val1 = in.readByte();
+                    byte val2 = in.readByte();
+                    
+                    short intValue = (short) (((short)val1 << 8) | val2);
+                    out.writeShort(intValue);  
                     j++;
                 }
-                int index = 0;
+                /*int index = 0;
                 while (in.available()>0) {
                     double val = in.readDouble();
                     index++;
                 }
                 System.out.println("tamañooo: i: "+index+" j: "+j);
-                
+                */
                     
             } catch (EOFException | FileNotFoundException ignored) {
                 ignored.printStackTrace();
@@ -81,7 +83,7 @@ public class ClasificadorEEG implements Runnable{
                 Logger.getLogger(ClasificadorEEG.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        }*/
+        }
         
         
         Map<String,Double> percentageBrainZone = new TreeMap<>();
@@ -89,7 +91,7 @@ public class ClasificadorEEG implements Runnable{
         System.out.println("litFiles: "+listFiles.length);
         for(int i = 0;i< listFiles.length; i++){
             try {
-                File recordingfile = new File(path + File.separator + listFiles[i] + ".bin");
+                File recordingfile = new File(path + File.separator + listFiles[i] + "-int" + ".bin");
                 Grabacion grabacion = new Grabacion();
                 Cita cita = new Cita();
                 System.out.println("folioCita: " + path);
@@ -98,7 +100,7 @@ public class ClasificadorEEG implements Runnable{
                 cita.setFolioCita(Integer.parseInt(componentsPath[componentsPath.length-1]));
                 folioCita = Integer.parseInt(componentsPath[componentsPath.length-1]);
                 grabacion.setCita(cita);
-                grabacion.setNombreArchivo(path + File.separator + listFiles[i] + ".bin");
+                grabacion.setNombreArchivo(path + File.separator + listFiles[i] + "-int" + ".bin");
                 
                 // Calls procedure storeRecording and this returns the last inser ID
                 int idGrabacion = source.registrarGrabacion(grabacion);

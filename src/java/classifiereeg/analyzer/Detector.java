@@ -151,6 +151,28 @@ public class Detector {
             return NOT_ANALYZED; //No Analizada
     }
     
+    // this is a variation f
+    public static int getWaveType3(double frequency, double amplitude){
+        if ((frequency > 0 && frequency < 4) && (amplitude > (63.75/2) && amplitude < (127.5/2)))
+            return DELTA_RHYTHM; //Ritmo Delta
+        else if ((frequency > 0 && frequency < 4) && (amplitude < (63.75/2) || amplitude > (127.5/2)))
+            return DELTA_FREQUENCY; //Frecuencia Delta
+        else if ((frequency >= 4 && frequency < 7) && (amplitude > (63.75/2) && amplitude < (95.625/2)))
+            return THETA_RHYTHM; //Ritmo Theta
+        else if ((frequency >= 4 && frequency < 7) && (amplitude < (63.75/2) || amplitude > (95.625/2)))
+            return THETA_FREQUENCY; //Frecuencia Theta
+        else if ((frequency >= 8 && frequency < 13) && ((amplitude > (25.5/2) && amplitude < (76.5/2)) || (amplitude > (127.5/2) && amplitude < (255/2))) )
+            return ALPHA_RHYTHM; //'Ritmo Alpha'
+        else if ((frequency >= 8 && frequency < 13) && ((amplitude < (25.5/2)) || (amplitude > (76.5/2) && amplitude < (127.5/2)) || (amplitude > (255/2))) )
+            return ALPHA_FREQUENCY; //Frecuencia Alpha
+        else if ((frequency >= 13 && frequency < 30) && ((amplitude > (6.375/2) && amplitude < (12.75/2)) || (amplitude > (19.125/2) && amplitude < (31.875/2))))
+            return BETA_RHYTHM; //Ritmo Beta
+        else if ((frequency >= 13 && frequency < 30) && ((amplitude < (6.375/2)) || (amplitude > (12.75/2) && amplitude < (19.125/2)) || (amplitude > (31.875/2))))
+            return BETA_FREQUENCY; //Frecuencia Beta
+        else
+            return NOT_ANALYZED; //No Analizada
+    }
+    
     public static double getMean(double[] data) {
         double sum = 0.0;
         if (data.length == 0) 

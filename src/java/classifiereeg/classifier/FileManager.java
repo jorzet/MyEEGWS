@@ -46,7 +46,7 @@ public class FileManager {
             System.out.println("tamaño: "+ path.length());
             double val;
             while(in.available()>0){
-                double doubleVal = in.readByte();
+                double doubleVal = in.readShort();
                 list.add(doubleVal);
             }
 

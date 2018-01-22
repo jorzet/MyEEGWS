@@ -109,7 +109,9 @@ public class DetectionAlgorithm {
         List<Double> dominantFrequencys = new ArrayList<>();
         List<Double> channelAmplitudes = new ArrayList<>();
         int secondNumer=0;
-        double mean = Detector.getMean(signal);
+        
+        double maxSignalFile = Detector.getAmplitude(signal);
+        double mean = (Detector.getMean(signal) * 127.5) / maxSignalFile;
         System.out.println("Mean: " + mean);
         System.out.println("\n\nResultados por segundo: \n");
         
@@ -118,8 +120,9 @@ public class DetectionAlgorithm {
             double[] originalSecond = new double[fm];
             for(int i=0;i<fm;i++){
                     //System.out.println("i: "+i+" j: "+j+" i+j: "+(i+j));
-                    second[i]=signal[i+j];
-                    originalSecond[i] = signal[i+j];
+                    double atenuatedSample = (signal[i+j] * 127.5) / maxSignalFile;
+                    second[i]= atenuatedSample;
+                    originalSecond[i] = atenuatedSample;
             }
 
             for(int i=0;i<fm;i++){
