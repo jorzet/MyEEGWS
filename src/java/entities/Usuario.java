@@ -40,7 +40,7 @@ public class Usuario {
 		return this.fistLastName;
 	}
         public String getSecondLastName(){
-            return this.fistLastName;
+            return this.secondLastName;
         }
 	public String getName(){
 		return this.name;
